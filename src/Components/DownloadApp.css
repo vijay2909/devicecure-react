@@ -1,0 +1,22 @@
+.downloadApp{
+    display: flex;
+    letter-spacing: 1.5px;
+}
+.downloadApp__image{
+    margin-left: -50px;
+}
+.downloadApp__image> img{
+    width: 450px;
+}
+.text{
+    margin-top: 50px;
+    margin-left: -40px;
+}
+.logo > img{
+    width: 40%;
+    margin-left: -55px;
+}
+.downloadApp__content{
+    display: flex;
+    flex-direction: column;
+}

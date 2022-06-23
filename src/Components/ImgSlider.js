@@ -13,19 +13,20 @@ function ImgSlider() {
     slidersToScroll: 1,
     autoplay: true,
   };
+// slider dimentions--1440/400px
 
   return <Slider className="ImgSlider" {...settings}>
      <div className="ImgSlider__division">
-      <img className="ImgSlider__img" src="" alt="Image1" />
+      <img className="ImgSlider__img" src=""  alt="Image 1"/>
     </div>
     <div className="ImgSlider__division">
-      <img className="ImgSlider__img" src=" " alt="Image2" />
+      <img className="ImgSlider__img" src=""  alt="Image 2"/>
     </div>
     <div className="ImgSlider__division">
-      <img className="ImgSlider__img" src="" alt="Image3" />
+      <img className="ImgSlider__img" src=""  alt="Image 3"/>
     </div>
     <div className="ImgSlider__division">
-      <img className="ImgSlider__img" src=" " alt="Image4" />
+      <img className="ImgSlider__img" src=""  alt="Image 4"/>
     </div>
   </Slider>;
 }

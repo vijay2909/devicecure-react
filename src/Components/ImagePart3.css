@@ -1,0 +1,10 @@
+.imagePart3 {
+  width: 300px;
+  height: auto;
+  text-align: center;
+
+}
+.imagePart3 > img {
+  object-fit: cover;
+  width: 100%;
+}

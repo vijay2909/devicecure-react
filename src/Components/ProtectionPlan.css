@@ -1,0 +1,35 @@
+.ProtectionPlan {
+  display: flex;
+  margin-left: 40px;
+  letter-spacing: 1.5px;
+}
+
+.ProtectionPlan__image > img {
+  width: 450px;
+}
+.text {
+  margin-top: 50px;
+  margin-left: -40px;
+}
+.logo {
+  margin-top: 50px;
+  margin-left: -40px;
+
+}
+.logo > span {
+  font-size: x-large;
+  margin-top: 10px;
+  padding: 20px;
+  background-color: #281a60;
+  color: #fff;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 6px 6px  4px #888888;
+}
+.ProtectionPlan__content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* #281A60 */
+/* #561D9C */
