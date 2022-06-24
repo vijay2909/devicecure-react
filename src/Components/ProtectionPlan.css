@@ -3,22 +3,24 @@
   margin-left: 40px;
   letter-spacing: 1.5px;
 }
-
+.ProtectionPlan__image{
+  margin-top: -40px;
+}
 .ProtectionPlan__image > img {
-  width: 450px;
+  width: 540px;
 }
 .text {
   margin-top: 50px;
   margin-left: -40px;
 }
 .logo {
-  margin-top: 50px;
+  margin-top: 150px;
   margin-left: -40px;
-
 }
 .logo > span {
-  font-size: x-large;
-  margin-top: 10px;
+  font-size: 30px;
+  font-weight: bolder;
+  margin-top: 50px;
   padding: 20px;
   background-color: #281a60;
   color: #fff;

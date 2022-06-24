@@ -1,0 +1,13 @@
+.column2{
+    margin: 30px;
+    color:#fff;
+}
+.column2__content{
+    font-weight: bold;
+    line-height: 2.5;
+    display: flex;
+    flex-direction: column;
+}
+.column2__title{
+margin-bottom: 10px;
+}

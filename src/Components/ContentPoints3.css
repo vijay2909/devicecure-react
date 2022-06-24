@@ -10,11 +10,12 @@
     display: flex;
     margin-right: 100px;
   }
-  .point__number {
+  .point__number1 {
+    color: #fff;
     padding: 10px 20px;
     align-items: center;
     justify-content: center;
-    background-color: #f0f0f0;
+    background-color: #281A60;
     margin-right: 25px;
     font-weight: bolder;
     font-size: larger;

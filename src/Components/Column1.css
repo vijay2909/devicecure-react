@@ -1,0 +1,36 @@
+.column1 {
+  line-height: 1.8;
+  font-family: "Poppins";
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.column1 > img {
+  object-fit: contain;
+  width: 250px;
+  margin: 25px;
+}
+.column1__address {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  margin-left: 34px;
+}
+.column1__address > strong {
+  font-weight: bold;
+  font-size: larger;
+}
+.column1__address > small {
+  font-weight: light;
+  font-size: medium;
+}
+.column1__icons {
+  margin-top: 20px;
+  font-size: larger;
+  margin-left: 34px;
+  color: #fff;
+  margin-bottom: -20px;
+}
+.column1__icons> span{
+  margin: 0 5px
+}

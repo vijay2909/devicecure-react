@@ -1,8 +1,18 @@
-
-.comment{
-    width: 420px;
-    padding: 10px;
+.comment {
+    width: 460px;
+    padding: 15px;
     border: 1px solid black;
+    border-radius: 30px;
     margin: 0;
-
+    text-align: center;
+    text-justify: inter-word;
+  }
+  .comment > h3 {
+    margin-bottom: 10px;
+  }
+.comment__id{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
 }

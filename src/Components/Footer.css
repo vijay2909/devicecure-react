@@ -1,0 +1,14 @@
+.footer {
+  padding: 10px;
+  font-family: "Poppins";
+  display: flex;
+  background-color: #561d9c;
+  width: 99%;
+  height: fit-content;
+  justify-content: space-between;
+}
+.footer__img {
+  object-fit: contain;
+  width: 140px;
+  margin: 18px 20px 10px;
+}

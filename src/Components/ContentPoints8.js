@@ -12,7 +12,7 @@ function ContentPoints1() {
           <small>{e.pointsmall1}</small>
         </span>
       </div>
-      <div className="contentPoints8__points" style={{paddingRight: 37}}>
+      <div className="contentPoints8__points">
         <span className="point__number">2</span>
         <span className="point__content">
           <strong>{e.pointStrong2}</strong>

@@ -1,6 +1,5 @@
 const content =[
-    {
-        
+    {   
         pointStrong1: 'Buy Devicecure Screen Protection Plan',
         pointsmall1: 'Fill some details about your mobile to find best offer for you, Choose best plan',
 
