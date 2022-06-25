@@ -23,7 +23,6 @@ function Column1() {
           <YouTubeIcon fontSize="large" />
         </span>
         <span>
-          {" "}
           <FacebookIcon fontSize="large" />
         </span>
       </div>

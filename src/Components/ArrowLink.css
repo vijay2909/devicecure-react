@@ -1,0 +1,10 @@
+.arrowLink{
+    border: 1px solid black;
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 150px;
+}

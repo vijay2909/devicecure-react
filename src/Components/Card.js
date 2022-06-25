@@ -5,28 +5,25 @@ import items from "../ItemsArray";
 function Card() {
   return (
     <div className="card">
+      <img src={items[0].image} alt="image" />
+      <div classname="card__info">
+        <p className="card__title">{items[0].title}</p>
+        <p className="card__rating">
+          {Array(items[0].rating)
+            .fill()
+            .map(() => (
+              <p>⭐</p>
+            ))}
+        </p>
+        <p className="card__price">
+          <small>₹</small>
+          <strong>{items[0].price}</strong>
+        </p>
+        <p className="card__button">Buy Now</p>
+      </div>
 
     </div>
   );
 }
 
 export default Card;
-
-{/* <div className="product">
-      <div classname="product__info">
-        <p>{title}</p>
-        <p className="product__price">
-          <small>$</small>
-          <strong>{price}</strong>
-        </p>
-        <p className="product__rating">
-          {Array(rating)
-            .fill()
-            .map(() => (
-              <p>⭐</p>
-          ))}
-        </p>
-      </div>
-      <img src={image} alt="" />
-      <button onClick={addToBasket}>Add to basket</button>
-    </div> */}
