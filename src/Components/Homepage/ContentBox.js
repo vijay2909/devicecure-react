@@ -5,8 +5,9 @@ function ContentBox() {
   return (
     <div>
       <div className="content__align">
-
+         
         <div className="box">
+          
         </div>
       </div>
     </div>

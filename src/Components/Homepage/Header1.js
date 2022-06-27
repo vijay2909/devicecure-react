@@ -11,7 +11,7 @@ function Header1() {
 
       <div className="header1__links">
         <span className="link__1">Location</span>
-        <Link to="/login">
+        <Link className="anchor" to="/login">
           <span className="link__2">Login</span>
         </Link>
       </div>

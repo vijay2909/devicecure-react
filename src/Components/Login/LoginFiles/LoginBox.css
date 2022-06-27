@@ -1,0 +1,63 @@
+.loginBox {
+  margin-top: 2rem;
+  border-radius: 15px;
+  line-height: 2;
+  font-family: "poppins";
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 60%;
+}
+.loginBox > h1 {
+  margin-bottom: 1rem;
+}
+.loginBox > form {
+  display: flex;
+  flex-direction: column;
+}
+.loginBox__input {
+  padding: 0.6rem;
+  border: 1px solid black;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+.loginBox > button {
+  padding: 0.6rem;
+  border: 1px solid black;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+.loginBox > button > img {
+  margin-right: 0.4rem;
+  width: 1.8rem;
+}
+.loginBox__google > span{
+  font-size: 1rem;
+}
+.loginBox__google{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginBox__contiue {
+  letter-spacing: 2.5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #281a60;
+}
+.loginBox > p {
+  font-size: 1.1rem;
+}
+.loginBox > p > a {
+  color: #561d9c;
+}
+.span{
+  margin-bottom: 0.4rem;
+  font-size: 1.1rem;
+}
+
+/* 
+/* #281A60 */
+/* #561D9C */
