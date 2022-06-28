@@ -1,9 +1,14 @@
 import React from 'react'
+import FirstPage from "./BookARepairFiles/FirstPage"
+import SecondPage from "./BookARepairFiles/SecondPage"
+import ThirdPage from "./BookARepairFiles/ThirdPage"
 
 function Repair() {
   return (
     <div>
-        this is repair page
+        <FirstPage />
+        <SecondPage />
+        <ThirdPage />
     </div>
   )
 }
