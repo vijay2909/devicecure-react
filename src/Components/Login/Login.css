@@ -1,14 +1,15 @@
-.login{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.login__image{
-    margin-left:3.5rem ;
- width:25rem
+.login__image {
+  margin-left: 3.2rem;
+  width: 25rem;
 }
-.login__logo{
-    margin-left: 10rem;
-    margin-top: 3rem;
-    margin-bottom: 10rem;
+.login__logo {
+  margin-left: 14rem;
+  margin-top: 3rem;
+  margin-bottom: 10rem;
 }

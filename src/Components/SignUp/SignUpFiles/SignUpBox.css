@@ -1,0 +1,46 @@
+.signUpBox {
+  margin-top: 2rem;
+  margin-left: 0.5rem;
+  border-radius: 15px;
+  line-height: 2;
+  font-family: "poppins";
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  height: fit-content;
+  width: 90%;
+}
+.span{
+    margin-bottom: -0.6rem;
+    font-weight: bold;
+}
+.signUpBox > form {
+  display: flex;
+  flex-direction: column;
+}
+.signUpBox__input {
+  padding: 0.7rem;
+  border: 1px solid black;
+  margin: 1rem 0;
+  border-radius: 6px;
+}
+.signUpBox > button {
+  cursor: pointer;
+  padding: 0.6rem;
+  border: 1px solid black;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+
+.signUpBox__contiue {
+  letter-spacing: 2.5px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #281a60;
+}
+
+/* 
+  /* #281A60 */
+/* #561D9C */

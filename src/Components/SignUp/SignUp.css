@@ -1,0 +1,17 @@
+.signUp{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    margin-left: -3rem;
+    overflow: hidden;
+}
+.signUp__image{
+    margin-left:1.9rem ;
+ width:25rem
+}
+.signUp__logo{
+    margin-left: 0.5rem;
+    margin-top: 3rem;
+    margin-bottom: 10rem;
+}

@@ -23,9 +23,14 @@
     margin: 0 30px 0 40px;
     text-decoration: none;
 }
+.header1__links{
+  margin: 20px;
+  padding-left: 20px;
+}
 .header1__logo> img {
   object-fit: contain;
   width: 350px;
-  margin: 10px 20px 10px;
+  margin: 10px;
+  margin-left: -80px;
 }
 

@@ -23,6 +23,7 @@
   border-radius: 8px;
 }
 .loginBox > button {
+  cursor: pointer;
   padding: 0.6rem;
   border: 1px solid black;
   margin: 1rem 0;
@@ -32,13 +33,17 @@
   margin-right: 0.4rem;
   width: 1.8rem;
 }
-.loginBox__google > span{
+.button__text{
+  color: #fff;
   font-size: 1rem;
 }
 .loginBox__google{
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.loginBox__google > span{
+  font-size: 1rem;
 }
 .loginBox__contiue {
   letter-spacing: 2.5px;
@@ -56,6 +61,10 @@
 .span{
   margin-bottom: 0.4rem;
   font-size: 1.1rem;
+}
+.or{
+  display: flex;
+  justify-content: center;
 }
 
 /* 
