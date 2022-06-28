@@ -1,5 +1,4 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import "./Header2.css";
 import "./Header1.css";
 import { Link } from "react-router-dom";
