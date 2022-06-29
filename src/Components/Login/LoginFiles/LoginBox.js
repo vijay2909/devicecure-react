@@ -1,30 +1,29 @@
 import React, { useState } from "react";
-import {Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import axios from "axios";
 import "./LoginBox.css";
 
 function LoginBox() {
   const [number, setNumber] = useState("");
-  const [role, setRole] = useState('')
+  // const [role, setRole] = useState('')
 
   function handleNumber(e) {
     setNumber(e.target.value);
   }
-  function handleRole(e){
+  /* function handleRole(e){
 setRole(e.target.value)
-  }
-  console.log({ number, role });
+  } */
+  console.log({ number });
 
   function handelApi() {
     axios
       .post("https://staging.devicecure.in/api/auth/login", {
-        phone_number : number,
-        role: role,
+        phone_number: number,
+        role: 'user',
       })
       .then((result) => {
         alert(result.data.message)
-    
-      }) 
+      })
       .catch((error) => {
         console.log(error);
         alert('Wrong Information')
@@ -43,12 +42,12 @@ setRole(e.target.value)
             value={number}
             onChange={handleNumber}
           />
-          <input
+          {/* <input
             className="loginBox__input"
             type="text"
             value={role}
             onChange={handleRole}
-          />
+          /> */}
         </form>
         <button className="loginBox__google">
           <img src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png" />
@@ -61,11 +60,11 @@ setRole(e.target.value)
           OR
         </p>
         <button className="loginBox__contiue">
-        <Link to="/signup">
-          <span className="button__text">Create Account</span>
+          <Link to="/signup">
+            <span className="button__text">Create Account</span>
           </Link>
         </button>
-        
+
         <p>
           By continuing you agree to Devicecure's{" "}
           <a href="">Condition of Use</a> and <a href="">Privacy Notice</a>

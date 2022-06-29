@@ -21,7 +21,9 @@ function SignUpBox() {
     axios.post('https://staging.devicecure.in/api/auth/signup',{
       name: name,
       email: email,
-      number: number
+      phone_number: number,
+      device_token: "123",
+      role: "user"
     })
     .then((response)=>{
       console.log(response) ;
