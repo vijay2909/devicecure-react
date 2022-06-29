@@ -1,44 +1,89 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import '../index.css';
 import styled from "styled-components";
+import axios from "axios";
+import SecondPage from "./SecondPage";
+
 
 export default function DetailsSection(props){
+
+    const reqBrand = axios.get("https://staging.devicecure.in/api/brands");
+    const reqColour = axios.get("https://staging.devicecure.in/api/colors");
+    const reqModel = axios.get("https://staging.devicecure.in/api/brand-models");
+    const reqIssues = axios.get("https://staging.devicecure.in/api/issues");
+    const reqTime = axios.get("https://staging.devicecure.in/api/time-slots");
+
+    const [brand, setBrand] = useState([]);
+    const [colour, setColour] = useState([]);
+    const [model, setModel] = useState([]);
+    const [issue, setIssue] = useState([]);
+    const [time, setTime] = useState([]); 
+
+    const navigate = useNavigate();
+    
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        navigate("/second-page");
+    }
+
+    useEffect(()=>{
+        axios.all([reqBrand, reqColour, reqModel, reqIssues, reqTime])
+        .then(axios.spread((...res) => {
+            setBrand(res[0].data.data);
+            setColour(res[1].data.data);
+            setModel(res[2].data.data);
+            setIssue(res[3].data.data);
+            setTime(res[4].data.data);
+        }))
+        .catch((err) => {
+            console.log(err)
+        })
+    },[])
+
     return(
         <>
-        <Details className="details">
+        <Details className="details" onSubmit={handleSubmit}>
             <Brand>
                 <label>Brand</label>
-                <select name="brand">
-                    <option value="" selected disabled>Choose a brand</option>
-                    <option value="iPhone">iPhone</option>
-                    <option value="Samsung">Samsung</option>
-                    <option value="Oppo">Oppo</option>
-                    <option value="OnePlus">OnePlus</option>
+                <select name="brand" >
+                    <option value="null" selected disabled>Choose a brand</option>
+                    {
+                    brand.map((data,index) => 
+                    <option key={index} value={data.brand_name}>{data.brand_name}</option>
+                    )}
                 </select>
             </Brand>
             <Model>
                 <label>Model</label>
-                <select name="brand">
-                    <option value="" selected disabled>Choose a brand</option>
-                    <option value="iPhone">iPhone</option>
-                    <option value="Samsung">Samsung</option>
-                    <option value="Oppo">Oppo</option>
-                    <option value="OnePlus">OnePlus</option>
+                <select name="model">
+                    <option value="null" selected disabled>Choose the model</option>
+                    {
+                    model.map((data,index) => 
+                    <option key={index} value={data.model_name}>{data.model_name}</option>
+                    )}
                 </select>
             </Model>
             <Colour>
                 <label>Colour</label>
-                <input type="text" />
+                <select name="colour">
+                    <option value="" selected disabled>Choose the colour</option>
+                    {
+                    colour.map((data,index) => 
+                    <option key={index} value={data.name}>{data.name}</option>
+                    )}
+                </select>
             </Colour>
             <Issue>
                 <label>Issue with phone</label>
-                <select name="brand" className="select">
+                <select name="issue" className="select">
                     <option value="" selected disabled>Choose an Issue</option>
-                    <option value="Brokken Display">Broken display</option>
-                    <option value="Touuch not working">Touch not working</option>
-                    <option value="Charging issue">Charging issue</option>
-                    <option value="Other">Other</option>
+                    {
+                    issue.map((data,index) => 
+                    <option key={index} value={data.title}>{data.title}</option>
+                    )}
                 </select>
             </Issue>
             <Date>
@@ -47,7 +92,13 @@ export default function DetailsSection(props){
             </Date>
             <Time>
                 <label>Best Time Slot</label>
-                <input type="time" />
+                <select name="time" className="select">
+                    <option value="" selected disabled>Choose an Time Slot</option>
+                    {
+                    time.map((data,index) => 
+                    <option key={index} value={data.slot}>{data.slot}</option>
+                    )}
+                </select>
             </Time>
             <Text>
                 <p>Fill Details And Get Your Mobile Repaired At Your Doorstep</p>
@@ -89,7 +140,7 @@ input{
     border : 1.5px solid #561D9C;
 }
 select{
-    width : 87%;
+    width : 80%;
     height : 40px;
     border-radius : 10px;
     padding : 0 10px;  
@@ -122,7 +173,7 @@ width : 40%;
 text-align : center;
 margin : 20px;
 input{
-    width : 85%;
+    width : 80%;
     height : 40px;
     border-radius : 10px;
     background-color : #281A60;
