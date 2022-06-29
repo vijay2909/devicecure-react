@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios"
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./SignUpBox.css";
 
 function SignUpBox() {
   const [name, setNAme] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
 
   function handleName(e) {
     setNAme(e.target.value);
@@ -16,22 +18,23 @@ function SignUpBox() {
   function handleEmail(e) {
     setEmail(e.target.value);
   }
-  function handleAPI(){
-    console.log({name,number,})
-    axios.post('https://staging.devicecure.in/api/auth/signup',{
-      name: name,
-      email: email,
-      phone_number: number,
-      device_token: "123",
-      role: "user"
-    })
-    .then((response)=>{
-      console.log(response) ;
-      alert('Signed Up')    
-    })
-    .catch((error)=>{
-      console.log(error)
-    })
+  function handleAPI() {
+    axios
+      .post("https://staging.devicecure.in/api/auth/signup", {
+        name: name,
+        email: email,
+        phone_number: number,
+        device_token: "123",
+        role: "user",
+      })
+      .then((response) => {
+    
+        localStorage.setItem("token", response.data.data.access_token);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
   return (
     <div>
@@ -61,7 +64,9 @@ function SignUpBox() {
           />
         </form>
 
-        <button onClick={handleAPI} className="signUpBox__contiue">Continue</button>
+        <button onClick={handleAPI} className="signUpBox__contiue">
+          Continue
+        </button>
       </div>
     </div>
   );
