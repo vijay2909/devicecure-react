@@ -20,8 +20,7 @@ function LoginBox() {
       })
       .then((result) => {
         console.log(result)
-        localStorage.setItem("token", result.data.data.access_token);
-        localStorage.setItem("name", result.data.data.access_token);
+        localStorage.setItem("token", result.data.data.access_token)
 
         navigate("/");
       })
