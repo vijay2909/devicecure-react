@@ -32,9 +32,7 @@ export default function DetailsSection() {
     console.log("logg"+ JSON.stringify(selectedBrand))
     setModel(selectedBrand[0].models)
 
-    // /---------------------------
     // const auth = 'Bearer ' + localStorage.getItem('token')
-    //  localStorage.getItem('token')
     // axios.get('https://staging.devicecure.in/api/Address',{
     //     headers:{
     //         Authorization:auth
@@ -44,6 +42,7 @@ export default function DetailsSection() {
     // }).catch((err)=>{
     //     console.log(err)
     // })
+    
   }
 
   useEffect(() => {
