@@ -5,7 +5,9 @@ import styled from "styled-components";
 import '../index.css';
 import axios from "./axios.js";
 
-export default function UpdateAddressSection(props){
+function UpdateAddressSection(props){
+
+
 
     const navigate = useNavigate();
 
@@ -19,8 +21,8 @@ export default function UpdateAddressSection(props){
             }
         })
         .then((res) => {
-            setName(res.data.data[0].name);
-            setPhoneNumber(res.data.data[0].phone_number);
+            setName(res.data.data[1].name);
+            setPhoneNumber(res.data.data[1].phone_number);
             setAltNumber(res.data.data[0].alternate_number);
             setHouse(res.data.data[0].house_number);
             setStreet(res.data.data[0].street);
@@ -153,6 +155,7 @@ export default function UpdateAddressSection(props){
         </>
     )
 }
+ export default UpdateAddressSection
 const UpdateAddress = styled.div``
 const Heading = styled.div`
 text-align : center;

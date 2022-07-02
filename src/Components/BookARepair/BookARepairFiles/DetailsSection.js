@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import "../index.css";
 import styled from "styled-components";
 import axios from "axios";
+import Multiselect from "multiselect-react-dropdown";
+import Select from "react-select";
 
 export default function DetailsSection() {
   const reqBrand = axios.get("https://staging.devicecure.in/api/brands");
@@ -17,32 +19,66 @@ export default function DetailsSection() {
   const [issue, setIssue] = useState([]);
   const [time, setTime] = useState([]);
 
+  const [brandName, setBrandName] = useState("");
+  const [colourName, setColourName] = useState("");
+  const [modelName, setModelName] = useState("");
+  const [issueName, setIssueName] = useState("");
+  const [timeSlot, setTimeSlot] = useState("");
+  const [date, setDate] = useState("");
+  const [multiIssue, setMultiIssue] = useState([]);
+
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    !localStorage.getItem('token')?
-      navigate('/login'):
-    navigate("/second-page");
+    !localStorage.getItem('token') ? navigate('/login') : navigate("/second-page");
+    const auth = 'Bearer ' + localStorage.getItem('token');
+    axios.post("https://staging.devicecure.in/api/repairing-orders",
+    {
+      mobile_brand : brandName,
+      mobile_model : modelName,
+      mobile_color : colourName,
+      issues : issueName,
+      repair_date : date,
+      time_slot_id : timeSlot
+    },
+    {
+      headers: 
+            {
+                Authorization : auth
+            }
+    })
+    .then((res) => {
+      console.log("this is reponse", res)
+    })
+    .catch((err) => {
+      console.log("this is error", err)
+    })
   };
 
-  function handleBrandClick(e) {
-    alert(e.target.value);
+  function handleBrand(e) {
     const selectedBrand = brand.filter((el) => el.brand_name == e.target.value);
-    console.log("logg"+ JSON.stringify(selectedBrand))
-    setModel(selectedBrand[0].models)
-
-    // const auth = 'Bearer ' + localStorage.getItem('token')
-    // axios.get('https://staging.devicecure.in/api/Address',{
-    //     headers:{
-    //         Authorization:auth
-    //     }
-    // }).then((res)=>{
-    //     console.log(res)
-    // }).catch((err)=>{
-    //     console.log(err)
-    // })
-    
+    setModel(selectedBrand[0].models);
+    setBrandName(e.target.value);
+  }
+  const handleModel = (e) => {
+    setModelName(e.target.value);
+  }
+  const handleColour = (e) => {
+    setColourName(e.target.value);
+    console.log(e.target.value);
+  }
+  const handleIssue = (e) => {
+    setIssueName(e.target.value);
+  }
+  const handleDate = (e) => {
+    setDate(e.target.value);
+  }
+  const handleTime = (e) => {
+    setTimeSlot(e.target.value);
+  }
+  const handleMultiIssue = (e) => {
+    console.log(e.target.value);
   }
 
   useEffect(() => {
@@ -61,18 +97,36 @@ export default function DetailsSection() {
       });
   }, []);
 
+  // const issues = ["hell0","byebye"];
+
+  // const issues = issue.map((data) => {
+  //   value : data.title,
+  //   label : data.title
+  // })
+
+  // const issues = [
+  //   {
+  //     value: "lolvalue1",
+  //     label: "lollabel1"
+  //   },
+  //   {
+  //     value: "lolvalue2",
+  //     label: "lollabel2"
+  //   }
+  // ]
+
   return (
    
     <Details className="details" onSubmit={handleSubmit}>
         
       <Brand required="required">
         <label>Brand</label>
-        <select onChange={handleBrandClick} name="brand">
+        <select onChange={handleBrand} name="brand">
           <option value="null" selected disabled>
             Choose a brand
           </option>
           {brand.map((data, index) => (
-            <option key={index} value={data.brand_name}>
+            <option key={index} value={data.brand_name} >
               {data.brand_name}
             </option>
           ))}
@@ -80,25 +134,25 @@ export default function DetailsSection() {
       </Brand>
       <Model>
         <label>Model</label>
-        <select name="model">
+        <select name="model" onChange={handleModel}>
           <option value="null" selected disabled>
             Choose the model
           </option>
-          {model.map((e) => (
-            <option key={e.id} value={e.model_name}>
-              {e.model_name}
+          {model.map((data, index) => (
+            <option key={index} value={data.model_name}>
+              {data.model_name}
             </option>
           ))}
         </select>
       </Model>
       <Colour>
         <label>Colour</label>
-        <select name="colour">
+        <select name="colour" onChange={handleColour}>
           <option value="" selected disabled>
             Choose the colour
           </option>
           {colour.map((data, index) => (
-            <option key={index} value={data.name}>
+            <option key={index} value={data.name} >
               {data.name}
             </option>
           ))}
@@ -106,12 +160,12 @@ export default function DetailsSection() {
       </Colour>
       <Issue>
         <label>Issue with phone</label>
-        <select name="issue" className="select">
+        <select name="issue" className="select" onChange={handleIssue} isMulti>
           <option value="" selected disabled>
             Choose an Issue
           </option>
           {issue.map((data, index) => (
-            <option key={index} value={data.title}>
+            <option key={index} value={data.title} >
               {data.title}
             </option>
           ))}
@@ -119,11 +173,11 @@ export default function DetailsSection() {
       </Issue>
       <Date>
         <label>Repairing Date</label>
-        <input type="date" />
+        <input type="date" onChange={handleDate}/>
       </Date>
       <Time>
         <label>Best Time Slot</label>
-        <select name="time" className="select">
+        <select name="time" className="select" onChange={handleTime}>
           <option value="" selected disabled>
             Choose an Time Slot
           </option>
@@ -134,6 +188,21 @@ export default function DetailsSection() {
           ))}
         </select>
       </Time>
+      {/* <Select isMulti options={lol}></Select>
+      <Multiselect
+        isObject={false}
+        onKeyPressFn={function noRefCheck(){}}
+        onRemove={(e)=>{console.log(e)}}
+        onSearch={function noRefCheck(){}}
+        onSelect={function noRefCheck(){}}
+        options={[
+          'Option 1',
+          'Option 2',
+          'Option 3',
+          'Option 4',
+          'Option 5'
+        ]}
+      /> */}
       <Text>
         <p>Fill Details And Get Your Mobile Repaired At Your Doorstep</p>
       </Text>

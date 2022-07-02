@@ -12,6 +12,17 @@ export default function AddressSection(props){
 
     const navigate = useNavigate();
 
+    const [dataId, setDataId] = useState("")
+    const [mainData, setMainData] = useState([]);
+    const [name, setName] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [altNumber, setAltNumber] = useState("");
+    const [house, setHouse] = useState("");
+    const [street, setStreet] = useState("");
+    const [landmark, setLandmark] = useState("");
+    const [pincode, setPincode] = useState("");
+    const [addType, setAddType] = useState("");
+
     useEffect(() => {
         const auth = 'Bearer ' + localStorage.getItem('token');
         axios.get("api/Address",
@@ -22,46 +33,62 @@ export default function AddressSection(props){
             }
         })
         .then((res) => {
-            setName(res.data.data[0].name);
-            setPhoneNumber(res.data.data[0].phone_number);
-            setAltNumber(res.data.data[0].alternate_number);
-            setHouse(res.data.data[0].house_number);
-            setStreet(res.data.data[0].street);
-            setLandmark(res.data.data[0].landmark);
-            setPincode(res.data.data[0].pin_code);
-            setAddType(res.data.data[0].address_type);
+            console.log(res.data.data);
+            setMainData(res.data.data);
         })
         .catch((err) => {
             console.log(err);
         })
-    },[])
+    },[]);
 
-    const [name, setName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [altNumber, setAltNumber] = useState("");
-    const [house, setHouse] = useState("");
-    const [street, setStreet] = useState("");
-    const [landmark, setLandmark] = useState("");
-    const [pincode, setPincode] = useState("");
-    const [addType, setAddType] = useState("");
-    
+    // const collectiveData = mainData.map((data,index) => {
+    //     setName(data.name);
+    //     setPhoneNumber(data.phone_number);
+    //     setAltNumber(data.alternate_number);
+    //     setHouse(data.house_number);
+    //     setStreet(data.street);
+    //     setLandmark(data.landmark);
+    //     setPincode(data.pin_code);
+    //     setAddType(data.address_type);
+
+    //     return(
+    //             <AddressSampleOne>
+    //                 <input type="radio" name="addresses"></input>
+    //                 <Written>
+    //                     <p className="name">{name}</p>
+    //                     <p className="address">{house}, {street}, {landmark} - {pincode}</p>
+    //                     <PhoneNumber>
+    //                         <Io5.IoCall className="phoneCall"/><p>{phoneNumber}</p><p>{altNumber}</p>
+    //                     </PhoneNumber>
+    //                 </Written>
+    //             </AddressSampleOne>
+    //     )
+    // });
+
     const handleNewAddress = (e) =>{
         e.preventDefault();
         navigate("/add-new-address");
-    } 
+    };
+
+    const handleAddClick = (e) =>{
+        console.log("clicked", e.target);
+        setDataId(e.target.value);
+
+    }
 
     const handleEdit = () => {
         console.log("edit clicked");
         navigate("/update-address-page");
-    }
+    };
+
     const handleDelete = () => {
         console.log("/delete clicked");
-    }
+    };
 
     const handleSubmit = (e) =>{
         e.preventDefault();
         navigate("/third-page");
-    }
+    };
 
     return(
         <>
@@ -70,19 +97,25 @@ export default function AddressSection(props){
                 <Io5.IoAddCircle className="addCircle"/>
                 <h3 onClick={handleNewAddress}>Add New Address</h3>
             </NewAddress>
-            <StoredAdress onSubmit={handleSubmit}>
-                <AddressSampleOne>
-                    <input type="radio" name="addresses"></input>
-                    <Written>
-                        <p className="name">{name}</p>
-                        <p className="address">{house}, {street}, {landmark} - {pincode}</p>
-                        <PhoneNumber><Io5.IoCall className="phoneCall"/><p>{phoneNumber}</p><p>{altNumber}</p></PhoneNumber>
-                    </Written>
-                    <CTA>
-                        <Io5.IoPencil className="editPencil" onClick={handleEdit}/>
-                        <Ai.AiFillDelete className="deleteDustbin" onClick={handleDelete}/>
-                    </CTA>
-                </AddressSampleOne>
+            <StoredAddress onSubmit={handleSubmit}>
+                {
+                    mainData.map((data,index) =>
+                        <AddressSampleOne key={index}>
+                            <input type="radio" name="addresses" onClick={handleAddClick} value={data.id}></input>
+                            <Written>
+                                <p className="name">{data.name}</p>
+                                <p className="address">{data.house_number}, {data.street}, {data.landmark} - {data.pin_code}</p>
+                                <PhoneNumber>
+                                    <Io5.IoCall className="phoneCall"/><p>{data.phone_number}</p><p>{data.alternate_number}</p>
+                                </PhoneNumber>
+                            </Written>
+                            <CTA>
+                                <Io5.IoPencil className="editPencil" value={data.id} onClick={handleEdit}/>
+                                <Ai.AiFillDelete className="deleteDustbin" value={data.id} onClick={handleDelete}/>
+                            </CTA>
+                        </AddressSampleOne>
+                    )
+                }
                 <Bottom>
                     <Text>
                         <p>You Are On The Way To Choose Expert Technician To Repair Your Mobile</p>
@@ -91,12 +124,12 @@ export default function AddressSection(props){
                         <input type="submit" value="Continue" />
                     </Submit>
                 </Bottom>
-            </StoredAdress>
+            </StoredAddress>
         </Address>
-
         </>
     )
 }
+
 const Address = styled.div`
 display : inline-block;
 width : 100%;
@@ -117,7 +150,7 @@ h3{
 }
 margin : 20px 40px;
 `
-const StoredAdress = styled.form`
+const StoredAddress = styled.form`
 width : 100%;
 display : flex;
 justify-content : space-between;
