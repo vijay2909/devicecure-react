@@ -32,3 +32,18 @@ select{
   background-position: calc(100% - 10px) center;
   background-size: 25px;
 }
+
+/* .multipleSelect {
+  width: 80%;
+  height: 20px;
+  border-radius: 10px;
+  padding: 0 10px;
+  border: 1.5px solid #561d9c;
+} */
+
+.select::-webkit-scrollbar {
+  display: none;
+}
+.select{
+  height : 60px;
+}
