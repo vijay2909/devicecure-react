@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import "../index.css";
 import styled from "styled-components";
 import axios from "axios";
-import Multiselect from "multiselect-react-dropdown";
-import Select from "react-select";
 
-export default function DetailsSection() {
+export default function DetailsSection(props){
+
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(true);
+ 
   const reqBrand = axios.get("https://staging.devicecure.in/api/brands");
   const reqColour = axios.get("https://staging.devicecure.in/api/colors");
   const reqIssues = axios.get("https://staging.devicecure.in/api/issues");
@@ -19,6 +22,23 @@ export default function DetailsSection() {
   const [issue, setIssue] = useState([]);
   const [time, setTime] = useState([]);
 
+  useEffect(() => {
+    axios
+      .all([reqBrand, reqColour, reqIssues, reqTime])
+      .then(
+        axios.spread((...res) => {
+          setBrand(res[0].data.data);
+          setColour(res[1].data.data);
+          setIssue(res[2].data.data);
+          setTime(res[3].data.data);
+          setLoading(false)
+        })
+      )
+      .catch((err) => {
+        // console.log(err);
+      });
+  }, []);
+
   const [brandName, setBrandName] = useState("");
   const [colourName, setColourName] = useState("");
   const [modelName, setModelName] = useState("");
@@ -26,33 +46,22 @@ export default function DetailsSection() {
   const [date, setDate] = useState("");
   const [multiIssue, setMultiIssue] = useState([]);
 
-  const navigate = useNavigate();
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
     !localStorage.getItem('token') ? navigate('/login') : navigate("/second-page");
-    const auth = 'Bearer ' + localStorage.getItem('token');
-    axios.post("https://staging.devicecure.in/api/repairing-orders",
-    {
+
+    props.setTotalDetailsData({
       mobile_brand : brandName,
       mobile_model : modelName,
       mobile_color : colourName,
       issues : multiIssue,
       repair_date : date,
       time_slot_id : timeSlot
-    },
-    {
-      headers: 
-            {
-                Authorization : auth
-            }
-    })
-    .then((res) => {
-      console.log("this is reponse", res)
-    })
-    .catch((err) => {
-      console.log("this is error", err)
-    })
+    });
+
+    navigate("/second-page");
+
   };
 
   function handleBrand(e) {
@@ -82,8 +91,8 @@ export default function DetailsSection() {
     const checkedValue = document.querySelectorAll('.issueItem:checked');
     checkedValue.forEach((e)=>{
       finalCheckedArray.push(e.value);
-      setMultiIssue(finalCheckedArray);
     })
+    setMultiIssue(finalCheckedArray);
   }
 
   // const handleIssueClick = (current) =>{
@@ -102,24 +111,7 @@ export default function DetailsSection() {
   // }
 
   const handleIssueClick = (e) =>{
-    console.log(e);
   }
-
-  useEffect(() => {
-    axios
-      .all([reqBrand, reqColour, reqIssues, reqTime])
-      .then(
-        axios.spread((...res) => {
-          setBrand(res[0].data.data);
-          setColour(res[1].data.data);
-          setIssue(res[2].data.data);
-          setTime(res[3].data.data);
-        })
-      )
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   const handleIssueDisplay = () =>{
     const issueList = document.querySelector(".issueList");
@@ -132,12 +124,14 @@ export default function DetailsSection() {
     issueList.classList.toggle("issueDisplay");
   }
 
-  return (
+  return(
+    <>
+    {loading ? <h1>PAGE LOADING...</h1> : 
     <Details className="details" onSubmit={handleSubmit}>
       <Brand required="required">
         <label>Brand</label>
-        <select onChange={handleBrand} name="brand">
-          <option value="null" selected disabled>
+        <select onChange={handleBrand} name="brand" required >
+          <option value="" selected disabled>
             Choose a brand
           </option>
           {brand.map((data, index) => (
@@ -149,8 +143,8 @@ export default function DetailsSection() {
       </Brand>
       <Model>
         <label>Model</label>
-        <select name="model" onChange={handleModel}>
-          <option value="null" selected disabled>
+        <select name="model" onChange={handleModel} required >
+          <option value="" selected disabled>
             Choose the model
           </option>
           {model.map((data, index) => (
@@ -162,7 +156,7 @@ export default function DetailsSection() {
       </Model>
       <Colour>
         <label>Colour</label>
-        <select name="colour" onChange={handleColour}>
+        <select name="colour" onChange={handleColour} required >
           <option value="" selected disabled>
             Choose the colour
           </option>
@@ -189,11 +183,11 @@ export default function DetailsSection() {
       </Issue>
       <Date>
         <label>Repairing Date</label>
-        <input type="date" onChange={handleDate}/>
+        <input type="date" onChange={handleDate} required/>
       </Date>
       <Time>
         <label>Best Time Slot</label>
-        <select name="time" className="select" onChange={handleTime}>
+        <select name="time" className="select" onChange={handleTime} required>
           <option value="" selected disabled>
             Choose an Time Slot
           </option>
@@ -207,13 +201,13 @@ export default function DetailsSection() {
       <Text>
         <p>Fill Details And Get Your Mobile Repaired At Your Doorstep</p>
       </Text>
-      
       <Submit>
         <input type="submit" value="Continue" />
       </Submit>
     </Details>
-   
-  );
+}
+    </>
+    );
 }
 const Details = styled.form`
   width: 100%;

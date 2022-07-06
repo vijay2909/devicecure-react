@@ -4,16 +4,18 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import '../index.css';
 import axios from "./axios.js";
+import Header1 from "../../Homepage/Header1";
+import Header2 from "../../Homepage/Header2";
+import Footer from "../../Homepage/Footer";
 
 function UpdateAddressSection(props){
-
-
 
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(props.addId);
         const auth = 'Bearer ' + localStorage.getItem('token');
-        axios.get("api/Address",
+        axios.get(`api/Address/${props.addId}`,
         {
             headers: 
             {
@@ -21,14 +23,14 @@ function UpdateAddressSection(props){
             }
         })
         .then((res) => {
-            setName(res.data.data[1].name);
-            setPhoneNumber(res.data.data[1].phone_number);
-            setAltNumber(res.data.data[0].alternate_number);
-            setHouse(res.data.data[0].house_number);
-            setStreet(res.data.data[0].street);
-            setLandmark(res.data.data[0].landmark);
-            setPincode(res.data.data[0].pin_code);
-            setAddType(res.data.data[0].address_type);
+            setName(res.data.data.name);
+            setPhoneNumber(res.data.data.phone_number);
+            setAltNumber(res.data.data.alternate_number);
+            setHouse(res.data.data.house_number);
+            setStreet(res.data.data.street);
+            setLandmark(res.data.data.landmark);
+            setPincode(res.data.data.pin_code);
+            setAddType(res.data.data.address_type);
         })
         .catch((err) => {
             console.log(err);
@@ -77,7 +79,7 @@ function UpdateAddressSection(props){
     const handleSubmit = (e) => {
         e.preventDefault();
         const auth = 'Bearer ' + localStorage.getItem('token')
-        axios.put("/Address",
+        axios.put(`api/Address/${props.addId}`,
         {
             name : name,
             phone_number : phoneNumber,
@@ -99,50 +101,52 @@ function UpdateAddressSection(props){
 
     return(
         <>
+        <Header1 />
+        <Header2 />
         <UpdateAddress className="container">
             <Heading><h1>Updating Address</h1></Heading>
             <UpdatingForm onSubmit={handleSubmit}>
                 <Name>
                     <label>Name : </label>
-                    <input type="text" value={name} onChange={handleName} />
+                    <input type="text" value={name} onChange={handleName} required />
                 </Name>
                 <PhoneNumber>
                     <label>Phone Number : </label>
-                    <input type="text" value={phoneNumber} onChange={handlePhoneNumber} />
+                    <input type="text" value={phoneNumber} onChange={handlePhoneNumber} required />
                 </PhoneNumber>
                 <AltNumber>
                     <label>Alternative Phone Number : </label>
-                    <input type="text" value={altNumber} onChange={handleAltNumber} />
+                    <input type="text" value={altNumber} onChange={handleAltNumber} required />
                 </AltNumber>
                 <HouseNumber>
                     <label>House/Plot Number : </label>
-                    <input type="text" value={house} onChange={handleHouse} />
+                    <input type="text" value={house} onChange={handleHouse} required />
                 </HouseNumber>
                 <Street>
                     <label>Street : </label>
-                    <input type="text" value={street} onChange={handleStreet} />
+                    <input type="text" value={street} onChange={handleStreet} required />
                 </Street>
                 <Landmark>
                     <label>Landmark : </label>
-                    <input type="text" value={landmark} onChange={handleLandmark} />
+                    <input type="text" value={landmark} onChange={handleLandmark} required />
                 </Landmark>
                 <Pincode>
                     <label>Pin Code : </label>
-                    <input type="text" value={pincode} onChange={handlePincode} />
+                    <input type="text" value={pincode} onChange={handlePincode} required />
                 </Pincode>
                 <AddressType>
                     <label>Address Type : </label>
                     <AddTypeRadios>
                         <HomeRadio>
-                            <input type="radio" name="add_type" value="HOME" onClick={handleAddType} />
+                            <input type="radio" name="add_type" value="HOME" onClick={handleAddType} required />
                             <label>Home</label>
                         </HomeRadio>
                         <OfficeRadio>
-                            <input type="radio" name="add_type" value="OFFICE" onClick={handleAddType} />
+                            <input type="radio" name="add_type" value="OFFICE" onClick={handleAddType} required />
                             <label>Office</label>
                         </OfficeRadio>
                         <OtherRadio>
-                            <input type="radio" name="add_type" value="OTHER" onClick={handleAddType} />
+                            <input type="radio" name="add_type" value="OTHER" onClick={handleAddType} required />
                             <label>Other</label>
                         </OtherRadio>
                     </AddTypeRadios>
@@ -151,7 +155,8 @@ function UpdateAddressSection(props){
                     <input type="submit" value="Add"/>
                 </Submit>
             </UpdatingForm>
-        </UpdateAddress>    
+        </UpdateAddress>  
+        <Footer />  
         </>
     )
 }

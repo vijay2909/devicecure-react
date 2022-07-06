@@ -1,18 +1,18 @@
 import React, {useEffect, useState} from "react";
-import ReactDOM from "react-dom";
 import '../index.css'
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "./axios";
 import * as Io5 from "react-icons/io5";
 import * as Ai from "react-icons/ai";
-import AddNewAddressSection from "./AddNewAddressSection";
 
 export default function AddressSection(props){
 
     const navigate = useNavigate();
 
-    const [dataId, setDataId] = useState("")
+    const [loading, setLoading] = useState(true);
+
+    const [addressId, setAddressId] = useState("")
     const [mainData, setMainData] = useState([]);
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -23,8 +23,10 @@ export default function AddressSection(props){
     const [pincode, setPincode] = useState("");
     const [addType, setAddType] = useState("");
 
+    const auth = 'Bearer ' + localStorage.getItem('token');
+
     useEffect(() => {
-        const auth = 'Bearer ' + localStorage.getItem('token');
+        console.log(props.totalDetailsData)
         axios.get("api/Address",
         {
             headers: 
@@ -33,65 +35,91 @@ export default function AddressSection(props){
             }
         })
         .then((res) => {
-            console.log(res.data.data);
             setMainData(res.data.data);
+            setLoading(false)
         })
         .catch((err) => {
             console.log(err);
         })
     },[]);
 
-    // const collectiveData = mainData.map((data,index) => {
-    //     setName(data.name);
-    //     setPhoneNumber(data.phone_number);
-    //     setAltNumber(data.alternate_number);
-    //     setHouse(data.house_number);
-    //     setStreet(data.street);
-    //     setLandmark(data.landmark);
-    //     setPincode(data.pin_code);
-    //     setAddType(data.address_type);
-
-    //     return(
-    //             <AddressSampleOne>
-    //                 <input type="radio" name="addresses"></input>
-    //                 <Written>
-    //                     <p className="name">{name}</p>
-    //                     <p className="address">{house}, {street}, {landmark} - {pincode}</p>
-    //                     <PhoneNumber>
-    //                         <Io5.IoCall className="phoneCall"/><p>{phoneNumber}</p><p>{altNumber}</p>
-    //                     </PhoneNumber>
-    //                 </Written>
-    //             </AddressSampleOne>
-    //     )
-    // });
+    const handleRadioClick = (e) =>{
+        const addressData = JSON.parse(e.target.value);
+        console.log("data", addressData);
+        console.log("address id", addressData.id);
+        setAddressId(addressData.id);
+        setName(addressData.name)
+        setPhoneNumber(addressData.phone_number)
+        setAltNumber(addressData.alternate_number)
+        setHouse(addressData.house)
+        setStreet(addressData.street)
+        setLandmark(addressData.landmark)
+        setPincode(addressData.pin_code)
+        setAddType(addressData.address_type)
+    };
 
     const handleNewAddress = (e) =>{
         e.preventDefault();
         navigate("/add-new-address");
     };
 
-    const handleAddClick = (e) =>{
-        console.log("clicked", e.target);
-        setDataId(e.target.value);
-
-    }
-
-    const handleEdit = () => {
+    const handleEdit = (e) => {
         console.log("edit clicked");
+        const EditLi = e.target.closest(".editLi");
+        const EditLiId = JSON.parse(EditLi.getAttribute("value")).id;
+        console.log("EditLiId", EditLiId);
+        props.setAddId(EditLiId);
+        // props.setAddressId
         navigate("/update-address-page");
     };
 
-    const handleDelete = () => {
-        console.log("/delete clicked");
+    const handleDelete = (e) => {
+        console.log("delete clicked");
+        const DeleteLi = e.target.closest(".deleteLi");
+        const DeleteLiId = JSON.parse(DeleteLi.getAttribute("value")).id;
+        console.log("DeleteLiId", DeleteLiId);
+        props.setAddId(DeleteLiId);
+
+        axios.delete(`api/Address/${DeleteLiId}`,
+        {
+            headers: 
+            {
+                Authorization : auth
+            }
+        })
+        .then((res)=>{
+            console.log("this is res", res);
+            document.location.reload(true);
+        })
+        .catch((err)=>{
+            console.log("this is err", err);
+        })
     };
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        navigate("/third-page");
+
+        props.setTotalDetailsData({
+            ...props.totalDetailsData,
+            name : name,
+            phone_number : phoneNumber,
+            alternate_number : altNumber,
+            house_number : house,
+            street : street,
+            pin_code : pincode,
+            address_type : addType,
+            landmark : landmark,
+            address_id : addressId,
+            wallet_money : "",
+            coupon_id : ""
+        })
+
+        navigate("/third-page")
     };
 
     return(
         <>
+        {loading ? <h1>PAGE LOADING...</h1> : 
         <Address>
             <NewAddress>
                 <Io5.IoAddCircle className="addCircle"/>
@@ -101,7 +129,7 @@ export default function AddressSection(props){
                 {
                     mainData.map((data,index) =>
                         <AddressSampleOne key={index}>
-                            <input type="radio" name="addresses" onClick={handleAddClick} value={data.id}></input>
+                            <input type="radio" required name="addresses" onClick={handleRadioClick} value={JSON.stringify(data)}></input>
                             <Written>
                                 <p className="name">{data.name}</p>
                                 <p className="address">{data.house_number}, {data.street}, {data.landmark} - {data.pin_code}</p>
@@ -110,8 +138,8 @@ export default function AddressSection(props){
                                 </PhoneNumber>
                             </Written>
                             <CTA>
-                                <Io5.IoPencil className="editPencil" value={data.id} onClick={handleEdit}/>
-                                <Ai.AiFillDelete className="deleteDustbin" value={data.id} onClick={handleDelete}/>
+                                <li className="editLi"  value={JSON.stringify(data)} ><Io5.IoPencil className="editPencil" onClick={handleEdit} /></li>
+                                <li className="deleteLi"  value={JSON.stringify(data)} ><Ai.AiFillDelete className="deleteDustbin" onClick={handleDelete} /></li>
                             </CTA>
                         </AddressSampleOne>
                     )
@@ -126,6 +154,7 @@ export default function AddressSection(props){
                 </Bottom>
             </StoredAddress>
         </Address>
+        }
         </>
     )
 }
@@ -188,12 +217,12 @@ p{
     color : #281A60;
 }
 `
-const CTA = styled.div`
+const CTA = styled.ul`
+height : 100%;
 display : flex;
 flex-direction : column;
-height : 100%;
 justify-content : space-evenly;
-align-items : center;
+list-style-type : none;
 .editPencil, .deleteDustbin{
     font-size : 1.5rem;
     color : #281A60;

@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import '../index.css';
 import axios from "./axios.js";
+import Header1 from "../../Homepage/Header1";
+import Header2 from "../../Homepage/Header2";
+import Footer from "../../Homepage/Footer";
 
 export default function AddNewAddressSection(props){
 
@@ -81,50 +84,52 @@ export default function AddNewAddressSection(props){
 
     return(
         <>
+        <Header1 />
+        <Header2 />
         <NewAddress className="container">
         <Heading><h1>Adding New Address</h1></Heading>
             <AddingForm onSubmit={handleSubmit}>
                 <Name>
                     <label>Name : </label>
-                    <input type="text" value={name} onChange={handleName} />
+                    <input type="text" value={name} onChange={handleName} required />
                 </Name>
                 <PhoneNumber>
                     <label>Phone Number : </label>
-                    <input type="text" value={phoneNumber} onChange={handlePhoneNumber} />
+                    <input type="text" value={phoneNumber} onChange={handlePhoneNumber} required />
                 </PhoneNumber>
                 <AltNumber>
                     <label>Alternative Phone Number : </label>
-                    <input type="text" value={altNumber} onChange={handleAltNumber} />
+                    <input type="text" value={altNumber} onChange={handleAltNumber} required />
                 </AltNumber>
                 <HouseNumber>
                     <label>House/Plot Number : </label>
-                    <input type="text" value={house} onChange={handleHouse} />
+                    <input type="text" value={house} onChange={handleHouse} required />
                 </HouseNumber>
                 <Street>
                     <label>Street : </label>
-                    <input type="text" value={street} onChange={handleStreet} />
+                    <input type="text" value={street} onChange={handleStreet} required />
                 </Street>
                 <Landmark>
                     <label>Landmark : </label>
-                    <input type="text" value={landmark} onChange={handleLandmark} />
+                    <input type="text" value={landmark} onChange={handleLandmark} required />
                 </Landmark>
                 <Pincode>
                     <label>Pin Code : </label>
-                    <input type="text" value={pincode} onChange={handlePincode} />
+                    <input type="text" value={pincode} onChange={handlePincode} required />
                 </Pincode>
                 <AddressType>
                     <label>Address Type : </label>
                     <AddTypeRadios>
                         <HomeRadio>
-                            <input type="radio" name="add_type" value="HOME" onClick={handleAddType} />
+                            <input type="radio" name="add_type" value="HOME" onClick={handleAddType} required />
                             <label>Home</label>
                         </HomeRadio>
                         <OfficeRadio>
-                            <input type="radio" name="add_type" value="OFFICE" onClick={handleAddType} />
+                            <input type="radio" name="add_type" value="OFFICE" onClick={handleAddType} required />
                             <label>Office</label>
                         </OfficeRadio>
                         <OtherRadio>
-                            <input type="radio" name="add_type" value="OTHER" onClick={handleAddType} />
+                            <input type="radio" name="add_type" value="OTHER" onClick={handleAddType} required />
                             <label>Other</label>
                         </OtherRadio>
                     </AddTypeRadios>
@@ -133,7 +138,8 @@ export default function AddNewAddressSection(props){
                     <input type="submit" value="Add"/>
                 </Submit>
             </AddingForm>
-        </NewAddress>    
+        </NewAddress>  
+        <Footer />  
         </>
     )
 }
