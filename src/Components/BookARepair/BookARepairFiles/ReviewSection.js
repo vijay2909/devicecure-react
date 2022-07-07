@@ -7,17 +7,13 @@ import axios from "axios";
 
 export default function ReviewSection(props){
 
-    useEffect(()=>{
-        console.log(props.totalDetailsData);
-    },[])
-
     const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
 
         const auth = 'Bearer ' + localStorage.getItem('token');
-        axios.post("api/repairing-orders",
+        axios.post("https://staging.devicecure.in/api/repairing-orders",
         {
             mobile_brand : props.totalDetailsData.mobile_brand,
             mobile_model : props.totalDetailsData.mobile_model,
@@ -26,8 +22,8 @@ export default function ReviewSection(props){
             repair_date : props.totalDetailsData.repair_date,
             time_slot_id : props.totalDetailsData.time_slot_id,
             address_id : props.totalDetailsData.address_id,
-            wallet_money : props.totalDetailsData.wallet_money,
-            coupon_id : props.totalDetailsData.coupon_id
+            wallet_money : "500",
+            coupon_id : "505050"
         },
         {
             headers: 
@@ -36,10 +32,10 @@ export default function ReviewSection(props){
             }
         })
         .then((res) => {
-            console.log(res);
+            console.log("this is res", res);
         })
         .catch((err) => {
-            console.log(err);
+            console.log("this is err", err);
         });
 
         navigate("/fourth-page");

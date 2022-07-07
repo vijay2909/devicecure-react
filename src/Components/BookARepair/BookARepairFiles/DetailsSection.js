@@ -10,7 +10,9 @@ export default function DetailsSection(props){
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
- 
+
+  const [current, setCurrent] = useState("");
+
   const reqBrand = axios.get("https://staging.devicecure.in/api/brands");
   const reqColour = axios.get("https://staging.devicecure.in/api/colors");
   const reqIssues = axios.get("https://staging.devicecure.in/api/issues");
@@ -23,6 +25,8 @@ export default function DetailsSection(props){
   const [time, setTime] = useState([]);
 
   useEffect(() => {
+    setCurrent(new window.Date().toISOString().slice(0, 10));
+    console.log(current);
     axios
       .all([reqBrand, reqColour, reqIssues, reqTime])
       .then(
@@ -31,7 +35,7 @@ export default function DetailsSection(props){
           setColour(res[1].data.data);
           setIssue(res[2].data.data);
           setTime(res[3].data.data);
-          setLoading(false)
+          setLoading(false);
         })
       )
       .catch((err) => {
@@ -92,25 +96,22 @@ export default function DetailsSection(props){
     checkedValue.forEach((e)=>{
       finalCheckedArray.push(e.value);
     })
+    console.log(finalCheckedArray);
     setMultiIssue(finalCheckedArray);
+    const inputValue = finalCheckedArray;
+    document.querySelector(".issueInputMain").value = inputValue;
   }
 
-  // const handleIssueClick = (current) =>{
-  //   console.log(current.target.value);
-  //   const label = document.querySelectorAll(".issueLabel");
-  //   label.forEach((e)=>{
-  //     const checkbox = e.firstElementChild;
-  //     // console.log(e.for);
-  //     // if(checkbox.checked == true){
-  //     //   checkbox.checked = false;
-  //     // }
-  //     // else{
-  //     //   checkbox.checked = true;
-  //     // }
-  //   })
-  // }
-
   const handleIssueClick = (e) =>{
+    const checkbox = e.target.firstElementChild;
+    if (checkbox.checked == true){
+      checkbox.checked = false;
+      handleIssueCheck();
+    }
+    else{
+      checkbox.checked = true;
+      handleIssueCheck();
+    }
   }
 
   const handleIssueDisplay = () =>{
@@ -169,12 +170,12 @@ export default function DetailsSection(props){
       </Colour>
       <Issue>
         <label className="issueLabelMain" >Issue with phone</label>
-        <input className="issueInputMain" type="text" placeholder="Choose an Issue" onClick={handleIssueDisplay}/>
+        <input className="issueInputMain" type="text" required placeholder="Choose an Issue" onClick={handleIssueDisplay}/>
         <IssueList className="issueList issueDisplay">
           {
             issue.map((data, index) => (
-              <label for={data.title} value={data.title} id={index} className="issueLabel" onClick={handleIssueClick}>
-                <input type="checkbox" id={index} value={data.title} className="issueItem" onChange={handleIssueCheck} />
+              <label for={data.title} value={data.title} className="issueLabel" onClick={handleIssueClick}>
+                <input type="checkbox" value={data.title} className="issueItem" onChange={handleIssueCheck} onChecked />
                 {data.title}<br/>
               </label>
             ))
@@ -183,7 +184,7 @@ export default function DetailsSection(props){
       </Issue>
       <Date>
         <label>Repairing Date</label>
-        <input type="date" onChange={handleDate} required/>
+        <input type="date" onChange={handleDate} min={current} required/>
       </Date>
       <Time>
         <label>Best Time Slot</label>

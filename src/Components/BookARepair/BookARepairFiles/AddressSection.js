@@ -51,7 +51,7 @@ export default function AddressSection(props){
         setName(addressData.name)
         setPhoneNumber(addressData.phone_number)
         setAltNumber(addressData.alternate_number)
-        setHouse(addressData.house)
+        setHouse(addressData.house_number)
         setStreet(addressData.street)
         setLandmark(addressData.landmark)
         setPincode(addressData.pin_code)

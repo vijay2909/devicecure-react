@@ -17,7 +17,7 @@ export default function FinalThankYouSection(props){
             }
         })
         .then((res) => {
-            console.log(res);
+            console.log(res.data.data);
         })
         .catch((err) => {
             console.log(err);
