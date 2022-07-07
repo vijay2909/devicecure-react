@@ -7,6 +7,15 @@ import axios from "axios";
 
 export default function ReviewSection(props){
 
+    // useEffect(() => {
+    //     window.localStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
+    // }, [props.totalDetailsData]);
+
+    // useEffect(() => {
+    //     props.setTotalDetailsData(window.localStorage.getItem("TotalDetailsData"));
+    //     console.log("try", props.totalDetailsData);
+    // }, []);
+
     const navigate = useNavigate();
 
     function handleSubmit(e) {
@@ -62,11 +71,11 @@ export default function ReviewSection(props){
                 </IssueFixDetails>
                 <IssueWithPhone>
                     <h3>Issue With Phone :</h3>
-                    {
+                    {/* {
                         props.totalDetailsData.issues.map((data,index)=>
                             <p key={index} >{data}</p>
                         )
-                    }
+                    } */}
                 </IssueWithPhone>
                 <PersonalDetails>
                     <h3>Personal Details :</h3>

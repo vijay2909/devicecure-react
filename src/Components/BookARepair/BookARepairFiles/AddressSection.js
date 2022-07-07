@@ -8,6 +8,15 @@ import * as Ai from "react-icons/ai";
 
 export default function AddressSection(props){
 
+    // useEffect(() => {
+    //     window.localStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
+    // }, [props.totalDetailsData]);
+
+    // useEffect(() => {
+    //     props.setTotalDetailsData(window.localStorage.getItem("TotalDetailsData"));
+    //     console.log("try", props.totalDetailsData);
+    // }, []);
+
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(true);

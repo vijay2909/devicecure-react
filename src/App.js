@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./Components/Homepage/Homepage";
@@ -15,7 +15,17 @@ import EditReviewSection from "./Components/BookARepair/BookARepairFiles/EditRev
 
 function App() {
   const[totalDetailsData, setTotalDetailsData] = useState({});
-  const[addId, setAddId] = useState("");
+  const[addId, setAddId] = useState();
+
+  // useEffect(() => {
+  //   setTotalDetailsData(window.localStorage.getItem("TotalDetailsData"));
+  //   setAddId(window.sessionStorage.getItem("AddressId"));
+  // }, []);
+
+  // useEffect(() => {
+  //   window.localStorage.setItem("TotalDetailsData", totalDetailsData);
+  //   window.sessionStorage.setItem("AddressId", addId);
+  // }, [totalDetailsData]);
   
     // mobile_brand : "",
     // mobile_model : "",
@@ -59,7 +69,8 @@ function App() {
           totalDetailsData={totalDetailsData} setTotalDetailsData={setTotalDetailsData} />} />
 
           <Route path="/edit-review-page" element={<EditReviewSection
-          totalDetailsData={totalDetailsData} setTotalDetailsData={setTotalDetailsData} />} />
+          totalDetailsData={totalDetailsData} setTotalDetailsData={setTotalDetailsData} 
+          addId={addId} setAddId={setAddId} />} />
 
           <Route path="/fourth-page" element={<FourthPage />} />
         </Routes>

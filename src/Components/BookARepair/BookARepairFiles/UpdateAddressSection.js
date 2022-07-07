@@ -57,23 +57,18 @@ function UpdateAddressSection(props){
     }
     const handleHouse = (e) => {
         setHouse(e.target.value);
-
     }
     const handleStreet = (e) => {
         setStreet(e.target.value);
-
     }
     const handleLandmark = (e) => {
         setLandmark(e.target.value);
-
     }
     const handlePincode = (e) => {
         setPincode(e.target.value);
-
     }
     const handleAddType = (e) => {
         setAddType(e.target.value);
-
     }
 
     const handleSubmit = (e) => {
@@ -95,6 +90,12 @@ function UpdateAddressSection(props){
             {
                 Authorization : auth
             }
+        })
+        .then((res)=>{
+            console.log(res);
+        })
+        .catch((err)=>{
+            console.log(err);
         });
         navigate("/second-page");
     }
@@ -202,19 +203,6 @@ const HouseNumber = styled(Name)``
 const Street = styled(Name)``
 const Pincode = styled(Name)``
 const Landmark = styled(Name)``
-const Submit = styled.div`
-  width: 40%;
-  text-align: center;
-  margin: 20px;
-  input {
-    width: 80%;
-    height: 40px;
-    border-radius: 10px;
-    background-color: #281a60;
-    color: white;
-    font-size: 1.3rem;
-  }
-`
 const AddressType = styled.div`
 width: 40%;
 margin: 20px;
@@ -241,3 +229,16 @@ label{
 `
 const OfficeRadio = styled(HomeRadio)``
 const OtherRadio = styled(HomeRadio)``
+const Submit = styled.div`
+  width: 40%;
+  text-align: center;
+  margin: 20px;
+  input {
+    width: 80%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #281a60;
+    color: white;
+    font-size: 1.3rem;
+  }
+`

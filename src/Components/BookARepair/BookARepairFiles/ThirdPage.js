@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import '../index.css';
 import styled from "styled-components";
 import Pagination from "./Pagination";
@@ -8,6 +8,16 @@ import Header2 from "../../Homepage/Header2";
 import Footer from "../../Homepage/Footer";
 
 export default function ThirdPage(props){
+    // useEffect(() => {
+    //     console.log("sessionStorage");
+    //     props.setTotalDetailsData(window.sessionStorage.getItem("TotalDetailsData"));
+    //     props.setAddId(window.sessionStorage.getItem("AddressId"));
+    // }, []);
+    
+    // useEffect(() => {
+    //     window.sessionStorage.setItem("TotalDetailsData", props.totalDetailsData);
+    //     window.sessionStorage.setItem("AddressId", props.addId);
+    // }, [props.totalDetailsData, props.addId]);
     return(
         <>
         <Header1 />

@@ -7,6 +7,15 @@ import axios from "axios";
 
 export default function DetailsSection(props){
 
+    // useEffect(() => {
+    // window.localStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
+    // }, [props.totalDetailsData]);
+
+    // useEffect(() => {
+    // props.setTotalDetailsData(window.localStorage.getItem("TotalDetailsData"));
+    // console.log("try", props.totalDetailsData);
+    // }, []);
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
@@ -212,7 +221,6 @@ export default function DetailsSection(props){
 }
 const Details = styled.form`
   width: 100%;
-  // height : 100vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
