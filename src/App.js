@@ -16,16 +16,6 @@ import EditReviewSection from "./Components/BookARepair/BookARepairFiles/EditRev
 function App() {
   const[totalDetailsData, setTotalDetailsData] = useState({});
   const[addId, setAddId] = useState();
-
-  // useEffect(() => {
-  //   setTotalDetailsData(window.localStorage.getItem("TotalDetailsData"));
-  //   setAddId(window.sessionStorage.getItem("AddressId"));
-  // }, []);
-
-  // useEffect(() => {
-  //   window.localStorage.setItem("TotalDetailsData", totalDetailsData);
-  //   window.sessionStorage.setItem("AddressId", addId);
-  // }, [totalDetailsData]);
   
     // mobile_brand : "",
     // mobile_model : "",

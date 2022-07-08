@@ -2,41 +2,30 @@ import React, {useEffect, useState} from "react";
 import '../index.css'
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import axios from "./axios";
+import axios from "axios";
 import * as Io5 from "react-icons/io5";
 import * as Ai from "react-icons/ai";
 
 export default function AddressSection(props){
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
-    // }, [props.totalDetailsData]);
-
-    // useEffect(() => {
-    //     props.setTotalDetailsData(window.localStorage.getItem("TotalDetailsData"));
-    //     console.log("try", props.totalDetailsData);
-    // }, []);
-
-    const navigate = useNavigate();
-
     const [loading, setLoading] = useState(true);
-
-    const [addressId, setAddressId] = useState("")
     const [mainData, setMainData] = useState([]);
-    const [name, setName] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [altNumber, setAltNumber] = useState("");
-    const [house, setHouse] = useState("");
-    const [street, setStreet] = useState("");
-    const [landmark, setLandmark] = useState("");
-    const [pincode, setPincode] = useState("");
-    const [addType, setAddType] = useState("");
 
     const auth = 'Bearer ' + localStorage.getItem('token');
 
     useEffect(() => {
-        console.log(props.totalDetailsData)
-        axios.get("api/Address",
+        if(!sessionStorage.getItem("TotalDetailsData")){
+            sessionStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
+            console.log("if(2nd)")
+        }
+        else{
+            props.setTotalDetailsData(JSON.parse(sessionStorage.getItem("TotalDetailsData")));
+            console.log("else(2rd)")
+        }
+        const previousPageData = JSON.parse(sessionStorage.getItem("TotalDetailsData"));
+        console.log("second page", previousPageData);
+
+        axios.get("https://staging.devicecure.in/api/Address",
         {
             headers: 
             {
@@ -52,10 +41,18 @@ export default function AddressSection(props){
         })
     },[]);
 
+    const [addressId, setAddressId] = useState("")
+    const [name, setName] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [altNumber, setAltNumber] = useState("");
+    const [house, setHouse] = useState("");
+    const [street, setStreet] = useState("");
+    const [landmark, setLandmark] = useState("");
+    const [pincode, setPincode] = useState("");
+    const [addType, setAddType] = useState("");
+
     const handleRadioClick = (e) =>{
         const addressData = JSON.parse(e.target.value);
-        console.log("data", addressData);
-        console.log("address id", addressData.id);
         setAddressId(addressData.id);
         setName(addressData.name)
         setPhoneNumber(addressData.phone_number)
@@ -65,7 +62,12 @@ export default function AddressSection(props){
         setLandmark(addressData.landmark)
         setPincode(addressData.pin_code)
         setAddType(addressData.address_type)
+        
+        // console.log("data", addressData);
+        // console.log("address id", addressData.id);
     };
+
+    const navigate = useNavigate();
 
     const handleNewAddress = (e) =>{
         e.preventDefault();
@@ -76,18 +78,17 @@ export default function AddressSection(props){
         console.log("edit clicked");
         const EditLi = e.target.closest(".editLi");
         const EditLiId = JSON.parse(EditLi.getAttribute("value")).id;
-        console.log("EditLiId", EditLiId);
         props.setAddId(EditLiId);
+        // console.log("EditLiId", EditLiId);
         // props.setAddressId
         navigate("/update-address-page");
     };
 
     const handleDelete = (e) => {
-        console.log("delete clicked");
         const DeleteLi = e.target.closest(".deleteLi");
         const DeleteLiId = JSON.parse(DeleteLi.getAttribute("value")).id;
-        console.log("DeleteLiId", DeleteLiId);
         props.setAddId(DeleteLiId);
+        // console.log("DeleteLiId", DeleteLiId);
 
         axios.delete(`api/Address/${DeleteLiId}`,
         {
@@ -107,9 +108,9 @@ export default function AddressSection(props){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        sessionStorage.removeItem("TotalDetailsData");
 
-        props.setTotalDetailsData({
-            ...props.totalDetailsData,
+        const addressDataObject = {
             name : name,
             phone_number : phoneNumber,
             alternate_number : altNumber,
@@ -121,8 +122,13 @@ export default function AddressSection(props){
             address_id : addressId,
             wallet_money : "",
             coupon_id : ""
-        })
-
+        };
+        console.log("props wala", props.totalDetailsData);
+        console.log("object wala", addressDataObject)
+        props.setTotalDetailsData(
+            Object.assign(props.totalDetailsData, addressDataObject)
+        );
+        console.log("is session removed or not??", sessionStorage.TotalDetailsData)
         navigate("/third-page")
     };
 

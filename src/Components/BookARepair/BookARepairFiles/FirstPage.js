@@ -8,13 +8,6 @@ import Header2 from "../../Homepage/Header2";
 import Footer from "../../Homepage/Footer";
 
 export default function FirstPage(props){
-    // useEffect(() => {
-    //     props.setTotalDetailsData(window.sessionStorage.getItem("TotalDetailsData"));
-    // }, []);
-    
-    // useEffect(() => {
-    //     window.sessionStorage.setItem("TotalDetailsData", props.totalDetailsData);
-    // }, [props.totalDetailsData]);
     return(
         <>
         <Header1 />

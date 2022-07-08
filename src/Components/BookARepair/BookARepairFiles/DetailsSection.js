@@ -7,21 +7,6 @@ import axios from "axios";
 
 export default function DetailsSection(props){
 
-    // useEffect(() => {
-    // window.localStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
-    // }, [props.totalDetailsData]);
-
-    // useEffect(() => {
-    // props.setTotalDetailsData(window.localStorage.getItem("TotalDetailsData"));
-    // console.log("try", props.totalDetailsData);
-    // }, []);
-
-  const navigate = useNavigate();
-
-  const [loading, setLoading] = useState(true);
-
-  const [current, setCurrent] = useState("");
-
   const reqBrand = axios.get("https://staging.devicecure.in/api/brands");
   const reqColour = axios.get("https://staging.devicecure.in/api/colors");
   const reqIssues = axios.get("https://staging.devicecure.in/api/issues");
@@ -33,9 +18,12 @@ export default function DetailsSection(props){
   const [issue, setIssue] = useState([]);
   const [time, setTime] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+  const [current, setCurrent] = useState("");
+
   useEffect(() => {
+    sessionStorage.removeItem("TotalDetailsData");
     setCurrent(new window.Date().toISOString().slice(0, 10));
-    console.log(current);
     axios
       .all([reqBrand, reqColour, reqIssues, reqTime])
       .then(
@@ -52,6 +40,8 @@ export default function DetailsSection(props){
       });
   }, []);
 
+  const navigate = useNavigate();
+
   const [brandName, setBrandName] = useState("");
   const [colourName, setColourName] = useState("");
   const [modelName, setModelName] = useState("");
@@ -62,8 +52,6 @@ export default function DetailsSection(props){
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    !localStorage.getItem('token') ? navigate('/login') : navigate("/second-page");
-
     props.setTotalDetailsData({
       mobile_brand : brandName,
       mobile_model : modelName,
@@ -73,8 +61,7 @@ export default function DetailsSection(props){
       time_slot_id : timeSlot
     });
 
-    navigate("/second-page");
-
+    !localStorage.getItem('token') ? navigate('/login') : navigate("/second-page");
   };
 
   function handleBrand(e) {

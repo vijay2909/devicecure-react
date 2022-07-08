@@ -7,20 +7,25 @@ import axios from "axios";
 
 export default function ReviewSection(props){
 
-    // useEffect(() => {
-    //     window.localStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
-    // }, [props.totalDetailsData]);
-
-    // useEffect(() => {
-    //     props.setTotalDetailsData(window.localStorage.getItem("TotalDetailsData"));
-    //     console.log("try", props.totalDetailsData);
-    // }, []);
+    useEffect(()=>{
+        if(!sessionStorage.getItem("TotalDetailsData")){
+            sessionStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
+            console.log("if(3rd)")
+        }
+        else{
+            props.setTotalDetailsData(JSON.parse(sessionStorage.getItem("TotalDetailsData")));
+            console.log("else(3rd)")
+        }
+        const previousPageData = JSON.parse(sessionStorage.getItem("TotalDetailsData"));
+        console.log("third page", previousPageData);
+    },[])
 
     const navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
 
+        console.log("3rd ka prop dusri baar", props.totalDetailsData);
         const auth = 'Bearer ' + localStorage.getItem('token');
         axios.post("https://staging.devicecure.in/api/repairing-orders",
         {
@@ -75,7 +80,7 @@ export default function ReviewSection(props){
                         props.totalDetailsData.issues.map((data,index)=>
                             <p key={index} >{data}</p>
                         )
-                    } */}
+                    }    */}
                 </IssueWithPhone>
                 <PersonalDetails>
                     <h3>Personal Details :</h3>
