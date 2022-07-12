@@ -7,37 +7,28 @@ import axios from "axios";
 
 export default function ReviewSection(props){
 
-    useEffect(()=>{
-        if(!sessionStorage.getItem("TotalDetailsData")){
-            sessionStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
-            console.log("if(3rd)")
-        }
-        else{
-            props.setTotalDetailsData(JSON.parse(sessionStorage.getItem("TotalDetailsData")));
-            console.log("else(3rd)")
-        }
-        const previousPageData = JSON.parse(sessionStorage.getItem("TotalDetailsData"));
-        console.log("third page", previousPageData);
-    },[])
+    const [mobileData, setMobileData] = useState({});
+    const [addData, setAddData] = useState({});
 
-    const navigate = useNavigate();
+    useEffect(()=>{
+        setMobileData(JSON.parse(sessionStorage.getItem("TotalDetailsData")))
+        setAddData(JSON.parse(sessionStorage.getItem("AddressDetails")))
+    },[])
 
     function handleSubmit(e) {
         e.preventDefault();
-
-        console.log("3rd ka prop dusri baar", props.totalDetailsData);
         const auth = 'Bearer ' + localStorage.getItem('token');
         axios.post("https://staging.devicecure.in/api/repairing-orders",
         {
-            mobile_brand : props.totalDetailsData.mobile_brand,
-            mobile_model : props.totalDetailsData.mobile_model,
-            mobile_color : props.totalDetailsData.mobile_color,
-            issues : props.totalDetailsData.issues,
-            repair_date : props.totalDetailsData.repair_date,
-            time_slot_id : props.totalDetailsData.time_slot_id,
-            address_id : props.totalDetailsData.address_id,
-            wallet_money : "500",
-            coupon_id : "505050"
+            mobile_brand : mobileData.mobile_brand,
+            mobile_model : mobileData.mobile_model,
+            mobile_color : mobileData.mobile_color,
+            issues : mobileData.issues,
+            repair_date : mobileData.repair_date,
+            time_slot_id : mobileData.time_slot_id,
+            address_id : addData.address_id,
+            wallet_money : addData.wallet_money,
+            coupon_id : addData.coupon_id
         },
         {
             headers: 
@@ -47,49 +38,50 @@ export default function ReviewSection(props){
         })
         .then((res) => {
             console.log("this is res", res);
+            sessionStorage.removeItem("TotalDetailsData");
+            sessionStorage.removeItem("AddressDetails")
+            props.setPageNum(4);
         })
         .catch((err) => {
             console.log("this is err", err);
         });
-
-        navigate("/fourth-page");
     }
 
     const handleEditReview = (e) => {
         e.preventDefault();
-        navigate("/edit-review-page")
+        props.setPageNum(7);
     }
 
     return(
         <>
         <Edit>
             <ReviewDetails>
-                <Io5.IoPencil onClick={handleEditReview} className="editPencil"/>
-                <h3 onClick={handleEditReview} >Review Your Order Details</h3>
+                {/* <Io5.IoPencil onClick={handleEditReview} className="editPencil"/> */}
+                <h3 onClick={handleEditReview} >Made a mistake while providing Details?<br/>Click on the above pages to change them!</h3>
             </ReviewDetails>
             <Details>
                 <IssueFixDetails>
-                    <p>Mobile : {props.totalDetailsData.mobile_brand} {props.totalDetailsData.mobile_model}</p>
-                    <p>Colour : {props.totalDetailsData.mobile_color}</p>
-                    <p>Repairing Date : {props.totalDetailsData.repair_date}</p>
-                    <p>Time Slot : {props.totalDetailsData.time_slot_id}</p>
+                    <p>Mobile : {mobileData.mobile_brand} {mobileData.mobile_model}</p>
+                    <p>Colour : {mobileData.mobile_color}</p>
+                    <p>Repairing Date : {mobileData.repair_date}</p>
+                    <p>Time Slot : {mobileData.time_slot_id}</p>
                 </IssueFixDetails>
                 <IssueWithPhone>
                     <h3>Issue With Phone :</h3>
                     {/* {
-                        props.totalDetailsData.issues.map((data,index)=>
+                        mobileData.issues.map((data,index)=>
                             <p key={index} >{data}</p>
                         )
                     }    */}
                 </IssueWithPhone>
                 <PersonalDetails>
                     <h3>Personal Details :</h3>
-                    <p>Name : {props.totalDetailsData.name}</p>
-                    <p>Address : {props.totalDetailsData.house_number} - {props.totalDetailsData.street}, {props.totalDetailsData.landmark}</p>
-                    <p>City : Jaipur</p>
+                    <p>Name : {addData.name}</p>
+                    <p>Address : {addData.house_number} - {addData.street}, {addData.landmark}</p>
+                    <p>City : {addData.city}</p>
                     <p>State : Rajasthan</p>
-                    <p>Postal Code : {props.totalDetailsData.pin_code}</p>
-                    <p>Contact No. : {props.totalDetailsData.phone_number}</p>
+                    <p>Postal Code : {addData.pin_code}</p>
+                    <p>Contact No. : {addData.phone_number}</p>
                 </PersonalDetails>
                 <Submission>
                     <p>Have a Promocode ?</p>
@@ -106,18 +98,8 @@ width : 100%;
 height : auto;
 `
 const ReviewDetails = styled.div`
-display : flex;
-align-items : center;
-justify-content : center;
+text-align : center;
 color : #281A60;
-h3{
-    margin-left : 10px;
-    cursor : pointer;
-}
-.editPencil{
-    font-size : 2rem;
-    cursor : pointer;
-}
 margin : 20px 40px;
 `
 const Details = styled.div`

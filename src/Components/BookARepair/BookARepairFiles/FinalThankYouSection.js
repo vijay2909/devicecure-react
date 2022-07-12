@@ -1,15 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import '../index.css';
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import axios from "./axios.js";
+import axios from "axios";
 
 export default function FinalThankYouSection(props){
 
+    const[finalData, setFinalData] = useState("");
+
     useEffect(()=>{
         const auth = 'Bearer ' + localStorage.getItem('token');
-        axios.get("/api/repairing-orders",
+        axios.get("https://staging.devicecure.in/api/repairing-orders",
         {
             headers: 
             {
@@ -18,10 +20,12 @@ export default function FinalThankYouSection(props){
         })
         .then((res) => {
             console.log(res.data.data);
+            setFinalData(res.data.data);
         })
         .catch((err) => {
             console.log(err);
         });
+        console.log("hogaya post");
     },[])
 
     return(
@@ -33,15 +37,15 @@ export default function FinalThankYouSection(props){
             </ThankyouAndID>
             <Details>
                 <IssueFixDetails>
-                    <p>Mobile : {props.totalDetailsData.mobile_brand} {props.totalDetailsData.mobile_model}</p>
-                    <p>Colour : {props.totalDetailsData.mobile_color}</p>
-                    <p>Repairing Date : {props.totalDetailsData.repair_date}</p>
-                    <p>Time Slot : {props.totalDetailsData.time_slot_id}</p>
+                    <p>Mobile : {finalData.mobile_brand} {finalData.mobile_model}</p>
+                    <p>Colour : {finalData.mobile_color}</p>
+                    <p>Repairing Date : {finalData.repair_date}</p>
+                    <p>Time Slot : {finalData.time_slot}</p>
                 </IssueFixDetails>
                 <IssueWithPhone>
                     <h3>Issue With Phone :</h3>
                     {
-                        props.totalDetailsData.issues.map((data,index)=>
+                        finalData.issues.map((data,index)=>
                             <p key={index}>{data}</p>
                         )
                     } 

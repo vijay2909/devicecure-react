@@ -10,18 +10,15 @@ import Footer from "../../Homepage/Footer";
 
 export default function AddNewAddressSection(props){
 
-    const navigate = useNavigate();
-
     const [name, setName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
-    // const [altNumber, setAltNumber] = useState<string | null>(null);
     const [altNumber, setAltNumber] = useState("");
     const [house, setHouse] = useState("");
     const [street, setStreet] = useState("");
-    // const [landmark, setLandmark] = useState<string | null>(null);
     const [landmark, setLandmark] = useState("");
     const [pincode, setPincode] = useState("");
     const [addType, setAddType] = useState("");
+    const [city, setCity] = useState("");
 
     const handleName = (e) => {
         setName(e.target.value);
@@ -52,6 +49,9 @@ export default function AddNewAddressSection(props){
         setAddType(e.target.value);
 
     }
+    const handleCity = (e) => {
+        setCity(e.target.value);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -65,7 +65,8 @@ export default function AddNewAddressSection(props){
             street : street,
             pin_code : pincode,
             address_type : addType,
-            landmark : landmark
+            landmark : landmark,
+            city : city
         },
         {
             headers: 
@@ -79,7 +80,7 @@ export default function AddNewAddressSection(props){
         .catch((err) => {
             console.log(err);
         });
-        navigate("/second-page");
+        props.setPageNum(2);
     }
 
     return(
@@ -101,6 +102,15 @@ export default function AddNewAddressSection(props){
                     <label>Alternative Phone Number : </label>
                     <input type="text" value={altNumber} onChange={handleAltNumber} required />
                 </AltNumber>
+                <City>
+                    <label>City</label>
+                    <select onChange={handleCity} required>
+                        <option value="" selected disabled>
+                            Choose a City
+                        </option>
+                        <option value="Jaipur">Jaipur</option>
+                    </select>
+                </City>
                 <HouseNumber>
                     <label>House/Plot Number : </label>
                     <input type="text" value={house} onChange={handleHouse} required />
@@ -119,20 +129,14 @@ export default function AddNewAddressSection(props){
                 </Pincode>
                 <AddressType>
                     <label>Address Type : </label>
-                    <AddTypeRadios>
-                        <HomeRadio>
-                            <input type="radio" name="add_type" value="HOME" onClick={handleAddType} required />
-                            <label>Home</label>
-                        </HomeRadio>
-                        <OfficeRadio>
-                            <input type="radio" name="add_type" value="OFFICE" onClick={handleAddType} required />
-                            <label>Office</label>
-                        </OfficeRadio>
-                        <OtherRadio>
-                            <input type="radio" name="add_type" value="OTHER" onClick={handleAddType} required />
-                            <label>Other</label>
-                        </OtherRadio>
-                    </AddTypeRadios>
+                    <select onChange={handleAddType} required>
+                        <option value="" selected disabled>
+                            Choose an Address Type
+                        </option>
+                        <option value="HOME">HOME</option>
+                        <option value="OFFICE">OFFICE</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
                 </AddressType>
                 <Submit>
                     <input type="submit" value="Add"/>
@@ -177,6 +181,13 @@ input {
   padding: 0 10px;
   border: 1.5px solid #561d9c;
 }
+select {
+    width: 80%;
+    height: 40px;
+    border-radius: 10px;
+    padding: 0 10px;
+    border: 1.5px solid #561d9c;
+  }
 `
 const PhoneNumber = styled(Name)``
 const AltNumber = styled(Name)``
@@ -184,6 +195,9 @@ const HouseNumber = styled(Name)``
 const Street = styled(Name)``
 const Pincode = styled(Name)``
 const Landmark = styled(Name)``
+const City = styled(Name)``
+const AddressType = styled(Name)``
+
 const Submit = styled.div`
   width: 40%;
   text-align: center;
@@ -197,29 +211,3 @@ const Submit = styled.div`
     font-size: 1.3rem;
   }
 `
-const AddressType = styled.div`
-width: 40%;
-margin: 20px;
-display: flex;
-flex-direction: column;
-align-items: center;
-label {
-    font-size: 1.3rem;
-    font-weight: bolder;
-    display: inline-block;
-    width: 80%;
-    text-align: left;
-    margin-bottom: 3px;
-`
-const AddTypeRadios = styled.div`
-width : 100%;
-text-align : center;
-`
-const HomeRadio = styled.div`
-width : 100%;
-label{
-    margin-left : 5px;
-}
-`
-const OfficeRadio = styled(HomeRadio)``
-const OtherRadio = styled(HomeRadio)``

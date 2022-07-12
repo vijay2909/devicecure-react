@@ -14,16 +14,14 @@ export default function AddressSection(props){
     const auth = 'Bearer ' + localStorage.getItem('token');
 
     useEffect(() => {
+
         if(!sessionStorage.getItem("TotalDetailsData")){
             sessionStorage.setItem("TotalDetailsData", JSON.stringify(props.totalDetailsData));
-            console.log("if(2nd)")
         }
         else{
             props.setTotalDetailsData(JSON.parse(sessionStorage.getItem("TotalDetailsData")));
-            console.log("else(2rd)")
         }
         const previousPageData = JSON.parse(sessionStorage.getItem("TotalDetailsData"));
-        console.log("second page", previousPageData);
 
         axios.get("https://staging.devicecure.in/api/Address",
         {
@@ -46,6 +44,7 @@ export default function AddressSection(props){
     const [phoneNumber, setPhoneNumber] = useState("");
     const [altNumber, setAltNumber] = useState("");
     const [house, setHouse] = useState("");
+    const [city, setCity] = useState("")
     const [street, setStreet] = useState("");
     const [landmark, setLandmark] = useState("");
     const [pincode, setPincode] = useState("");
@@ -54,24 +53,22 @@ export default function AddressSection(props){
     const handleRadioClick = (e) =>{
         const addressData = JSON.parse(e.target.value);
         setAddressId(addressData.id);
-        setName(addressData.name)
-        setPhoneNumber(addressData.phone_number)
-        setAltNumber(addressData.alternate_number)
-        setHouse(addressData.house_number)
-        setStreet(addressData.street)
-        setLandmark(addressData.landmark)
-        setPincode(addressData.pin_code)
-        setAddType(addressData.address_type)
-        
-        // console.log("data", addressData);
-        // console.log("address id", addressData.id);
+        setName(addressData.name);
+        setPhoneNumber(addressData.phone_number);
+        setAltNumber(addressData.alternate_number);
+        setCity(addressData.city);
+        setHouse(addressData.house_number);
+        setStreet(addressData.street);
+        setLandmark(addressData.landmark);
+        setPincode(addressData.pin_code);
+        setAddType(addressData.address_type);
     };
 
     const navigate = useNavigate();
 
     const handleNewAddress = (e) =>{
         e.preventDefault();
-        navigate("/add-new-address");
+        props.setPageNum(6);
     };
 
     const handleEdit = (e) => {
@@ -79,18 +76,15 @@ export default function AddressSection(props){
         const EditLi = e.target.closest(".editLi");
         const EditLiId = JSON.parse(EditLi.getAttribute("value")).id;
         props.setAddId(EditLiId);
-        // console.log("EditLiId", EditLiId);
-        // props.setAddressId
-        navigate("/update-address-page");
+        props.setPageNum(5);
     };
 
     const handleDelete = (e) => {
         const DeleteLi = e.target.closest(".deleteLi");
         const DeleteLiId = JSON.parse(DeleteLi.getAttribute("value")).id;
         props.setAddId(DeleteLiId);
-        // console.log("DeleteLiId", DeleteLiId);
 
-        axios.delete(`api/Address/${DeleteLiId}`,
+        axios.delete(`https://staging.devicecure.in/api/Address/${DeleteLiId}`,
         {
             headers: 
             {
@@ -99,7 +93,7 @@ export default function AddressSection(props){
         })
         .then((res)=>{
             console.log("this is res", res);
-            document.location.reload(true);
+            DeleteLi.closest(".individualAddressDiv").style.cssText = "display:none"
         })
         .catch((err)=>{
             console.log("this is err", err);
@@ -108,7 +102,6 @@ export default function AddressSection(props){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        sessionStorage.removeItem("TotalDetailsData");
 
         const addressDataObject = {
             name : name,
@@ -117,19 +110,16 @@ export default function AddressSection(props){
             house_number : house,
             street : street,
             pin_code : pincode,
+            city : city,
             address_type : addType,
             landmark : landmark,
             address_id : addressId,
             wallet_money : "",
             coupon_id : ""
         };
-        console.log("props wala", props.totalDetailsData);
-        console.log("object wala", addressDataObject)
-        props.setTotalDetailsData(
-            Object.assign(props.totalDetailsData, addressDataObject)
-        );
-        console.log("is session removed or not??", sessionStorage.TotalDetailsData)
-        navigate("/third-page")
+
+        sessionStorage.setItem("AddressDetails", JSON.stringify(addressDataObject));
+        props.setPageNum(3);
     };
 
     return(
@@ -143,7 +133,7 @@ export default function AddressSection(props){
             <StoredAddress onSubmit={handleSubmit}>
                 {
                     mainData.map((data,index) =>
-                        <AddressSampleOne key={index}>
+                        <AddressSampleOne key={index} className="individualAddressDiv">
                             <input type="radio" required name="addresses" onClick={handleRadioClick} value={JSON.stringify(data)}></input>
                             <Written>
                                 <p className="name">{data.name}</p>

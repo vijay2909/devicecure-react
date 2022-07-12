@@ -8,25 +8,19 @@ import Header2 from "../../Homepage/Header2";
 import Footer from "../../Homepage/Footer";
 
 export default function ThirdPage(props){
-    // useEffect(() => {
-    //     console.log("sessionStorage");
-    //     props.setTotalDetailsData(window.sessionStorage.getItem("TotalDetailsData"));
-    //     props.setAddId(window.sessionStorage.getItem("AddressId"));
-    // }, []);
-    
-    // useEffect(() => {
-    //     window.sessionStorage.setItem("TotalDetailsData", props.totalDetailsData);
-    //     window.sessionStorage.setItem("AddressId", props.addId);
-    // }, [props.totalDetailsData, props.addId]);
     return(
         <>
         <Header1 />
         <Header2 />
         <div className="container">
-            <Pagination activePage1="active" activePage2="active" activePage3="active" />
+            <Pagination 
+            activePage1="active" activePage2="active" activePage3="active" 
+            activeEdit1="activeEdit" activeEdit2="activeEdit" activeUnderline1="activeUnderline" activeUnderline2="activeUnderline"
+            pageNum={props.pageNum} setPageNum={props.setPageNum}
+            />
             <ReviewSection
-            totalDetailsData={props.totalDetailsData} 
-            setTotalDetailsData={props.setTotalDetailsData} 
+            totalDetailsData={props.totalDetailsData} setTotalDetailsData={props.setTotalDetailsData}
+            pageNum={props.pageNum} setPageNum={props.setPageNum}
             />
         </div>
         <Footer />

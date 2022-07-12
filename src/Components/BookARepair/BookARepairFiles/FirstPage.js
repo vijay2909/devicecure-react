@@ -15,8 +15,8 @@ export default function FirstPage(props){
         <div className="container">
             <Pagination activePage1="active" />
             <DetailsSection 
-            totalDetailsData={props.totalDetailsData} 
-            setTotalDetailsData={props.setTotalDetailsData} 
+            totalDetailsData={props.totalDetailsData} setTotalDetailsData={props.setTotalDetailsData} 
+            pageNum={props.pageNum} setPageNum={props.setPageNum}
             />
         </div>
         <Footer />

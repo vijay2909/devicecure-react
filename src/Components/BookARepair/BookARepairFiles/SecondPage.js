@@ -13,11 +13,15 @@ export default function SecondPage(props){
         <Header1 />
         <Header2 />
         <div className="container">
-            <Pagination activePage1="active" activePage2="active"/>
+            <Pagination
+            activePage1="active" activePage2="active" 
+            activeEdit1="activeEdit" activeUnderline1="activeUnderline"
+            pageNum={props.pageNum} setPageNum={props.setPageNum}
+            />
             <AddressSection 
-            totalDetailsData={props.totalDetailsData} 
-            setTotalDetailsData={props.setTotalDetailsData}
+            totalDetailsData={props.totalDetailsData} setTotalDetailsData={props.setTotalDetailsData}
             addId={props.addId} setAddId={props.setAddId}
+            pageNum={props.pageNum} setPageNum={props.setPageNum}
             />
         </div>
         <Footer />

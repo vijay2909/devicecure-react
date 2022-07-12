@@ -7,6 +7,8 @@ import axios from "axios";
 
 export default function DetailsSection(props){
 
+  const navigate = useNavigate();
+
   const reqBrand = axios.get("https://staging.devicecure.in/api/brands");
   const reqColour = axios.get("https://staging.devicecure.in/api/colors");
   const reqIssues = axios.get("https://staging.devicecure.in/api/issues");
@@ -40,8 +42,6 @@ export default function DetailsSection(props){
       });
   }, []);
 
-  const navigate = useNavigate();
-
   const [brandName, setBrandName] = useState("");
   const [colourName, setColourName] = useState("");
   const [modelName, setModelName] = useState("");
@@ -61,7 +61,7 @@ export default function DetailsSection(props){
       time_slot_id : timeSlot
     });
 
-    !localStorage.getItem('token') ? navigate('/login') : navigate("/second-page");
+    !localStorage.getItem('token') ? navigate('/login') : props.setPageNum(2);
   };
 
   function handleBrand(e) {
@@ -92,7 +92,6 @@ export default function DetailsSection(props){
     checkedValue.forEach((e)=>{
       finalCheckedArray.push(e.value);
     })
-    console.log(finalCheckedArray);
     setMultiIssue(finalCheckedArray);
     const inputValue = finalCheckedArray;
     document.querySelector(".issueInputMain").value = inputValue;
@@ -185,11 +184,11 @@ export default function DetailsSection(props){
       <Time>
         <label>Best Time Slot</label>
         <select name="time" className="select" onChange={handleTime} required>
-          <option value="" selected disabled>
+          <option value="" selected >
             Choose an Time Slot
           </option>
           {time.map((data, index) => (
-            <option key={index} value={data.slot}>
+            <option key={index} name={data.slot} value={data.id}>
               {data.slot}
             </option>
           ))}

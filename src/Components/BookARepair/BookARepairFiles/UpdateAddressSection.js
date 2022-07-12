@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import '../index.css';
-import axios from "./axios.js";
+import axios from "axios";
 import Header1 from "../../Homepage/Header1";
 import Header2 from "../../Homepage/Header2";
 import Footer from "../../Homepage/Footer";
 
 function UpdateAddressSection(props){
 
-    const navigate = useNavigate();
-
     useEffect(() => {
         console.log(props.addId);
         const auth = 'Bearer ' + localStorage.getItem('token');
-        axios.get(`api/Address/${props.addId}`,
+        axios.get(`https://staging.devicecure.in/api/Address/${props.addId}`,
         {
             headers: 
             {
@@ -31,6 +28,7 @@ function UpdateAddressSection(props){
             setLandmark(res.data.data.landmark);
             setPincode(res.data.data.pin_code);
             setAddType(res.data.data.address_type);
+            setCity(res.data.data.city);
         })
         .catch((err) => {
             console.log(err);
@@ -45,6 +43,7 @@ function UpdateAddressSection(props){
     const [landmark, setLandmark] = useState("");
     const [pincode, setPincode] = useState("");
     const [addType, setAddType] = useState("");
+    const [city, setCity] = useState("");
 
     const handleName = (e) => {
         setName(e.target.value);
@@ -70,11 +69,14 @@ function UpdateAddressSection(props){
     const handleAddType = (e) => {
         setAddType(e.target.value);
     }
+    const handleCity = (e) => {
+        setCity(e.target.value);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const auth = 'Bearer ' + localStorage.getItem('token')
-        axios.put(`api/Address/${props.addId}`,
+        axios.put(`https://staging.devicecure.in/api/Address/${props.addId}`,
         {
             name : name,
             phone_number : phoneNumber,
@@ -97,7 +99,7 @@ function UpdateAddressSection(props){
         .catch((err)=>{
             console.log(err);
         });
-        navigate("/second-page");
+        props.setPageNum(2);
     }
 
     return(
@@ -119,6 +121,15 @@ function UpdateAddressSection(props){
                     <label>Alternative Phone Number : </label>
                     <input type="text" value={altNumber} onChange={handleAltNumber} required />
                 </AltNumber>
+                <City>
+                    <label>City</label>
+                    <select value={city} onChange={handleCity} required>
+                        <option value="" selected disabled>
+                            Choose a City
+                        </option>
+                        <option value="Jaipur">Jaipur</option>
+                    </select>
+                </City>
                 <HouseNumber>
                     <label>House/Plot Number : </label>
                     <input type="text" value={house} onChange={handleHouse} required />
@@ -137,20 +148,14 @@ function UpdateAddressSection(props){
                 </Pincode>
                 <AddressType>
                     <label>Address Type : </label>
-                    <AddTypeRadios>
-                        <HomeRadio>
-                            <input type="radio" name="add_type" value="HOME" onClick={handleAddType} required />
-                            <label>Home</label>
-                        </HomeRadio>
-                        <OfficeRadio>
-                            <input type="radio" name="add_type" value="OFFICE" onClick={handleAddType} required />
-                            <label>Office</label>
-                        </OfficeRadio>
-                        <OtherRadio>
-                            <input type="radio" name="add_type" value="OTHER" onClick={handleAddType} required />
-                            <label>Other</label>
-                        </OtherRadio>
-                    </AddTypeRadios>
+                    <select value={addType} onChange={handleAddType} required>
+                        <option value="" selected disabled>
+                            Choose an Address Type
+                        </option>
+                        <option value="HOME">HOME</option>
+                        <option value="OFFICE">OFFICE</option>
+                        <option value="OTHER">OTHER</option>
+                    </select>
                 </AddressType>
                 <Submit>
                     <input type="submit" value="Add"/>
@@ -196,6 +201,13 @@ input {
   padding: 0 10px;
   border: 1.5px solid #561d9c;
 }
+select {
+    width: 80%;
+    height: 40px;
+    border-radius: 10px;
+    padding: 0 10px;
+    border: 1.5px solid #561d9c;
+  }
 `
 const PhoneNumber = styled(Name)``
 const AltNumber = styled(Name)``
@@ -203,32 +215,9 @@ const HouseNumber = styled(Name)``
 const Street = styled(Name)``
 const Pincode = styled(Name)``
 const Landmark = styled(Name)``
-const AddressType = styled.div`
-width: 40%;
-margin: 20px;
-display: flex;
-flex-direction: column;
-align-items: center;
-label {
-    font-size: 1.3rem;
-    font-weight: bolder;
-    display: inline-block;
-    width: 80%;
-    text-align: left;
-    margin-bottom: 3px;
-`
-const AddTypeRadios = styled.div`
-width : 100%;
-text-align : center;
-`
-const HomeRadio = styled.div`
-width : 100%;
-label{
-    margin-left : 5px;
-}
-`
-const OfficeRadio = styled(HomeRadio)``
-const OtherRadio = styled(HomeRadio)``
+const AddressType = styled(Name)``
+const City = styled(Name)``
+
 const Submit = styled.div`
   width: 40%;
   text-align: center;
