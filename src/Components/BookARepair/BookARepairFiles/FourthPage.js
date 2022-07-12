@@ -13,10 +13,7 @@ export default function FourthPage(props){
         <Header1 />
         <Header2 />
         <div className="container">
-            <FinalThankYouSection 
-            totalDetailsData={props.totalDetailsData} 
-            setTotalDetailsData={props.setTotalDetailsData} 
-            />
+            <FinalThankYouSection />
         </div>
         <Footer />
         </>

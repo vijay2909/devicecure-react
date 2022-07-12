@@ -11,8 +11,8 @@ export default function ReviewSection(props){
     const [addData, setAddData] = useState({});
 
     useEffect(()=>{
-        setMobileData(JSON.parse(sessionStorage.getItem("TotalDetailsData")))
-        setAddData(JSON.parse(sessionStorage.getItem("AddressDetails")))
+        setMobileData(JSON.parse(sessionStorage.getItem("TotalDetailsData")));
+        setAddData(JSON.parse(sessionStorage.getItem("AddressDetails")));
     },[])
 
     function handleSubmit(e) {
@@ -39,7 +39,9 @@ export default function ReviewSection(props){
         .then((res) => {
             console.log("this is res", res);
             sessionStorage.removeItem("TotalDetailsData");
-            sessionStorage.removeItem("AddressDetails")
+            sessionStorage.removeItem("AddressDetails");
+            var booking_id = res.data.data[0].booking_id;
+            sessionStorage.setItem("BookingId", booking_id);
             props.setPageNum(4);
         })
         .catch((err) => {
@@ -47,32 +49,22 @@ export default function ReviewSection(props){
         });
     }
 
-    const handleEditReview = (e) => {
-        e.preventDefault();
-        props.setPageNum(7);
-    }
-
     return(
         <>
         <Edit>
             <ReviewDetails>
-                {/* <Io5.IoPencil onClick={handleEditReview} className="editPencil"/> */}
-                <h3 onClick={handleEditReview} >Made a mistake while providing Details?<br/>Click on the above pages to change them!</h3>
+                <h3>Made a mistake while providing Details?<br/>Click on the above pages to change them!</h3>
             </ReviewDetails>
             <Details>
                 <IssueFixDetails>
                     <p>Mobile : {mobileData.mobile_brand} {mobileData.mobile_model}</p>
                     <p>Colour : {mobileData.mobile_color}</p>
                     <p>Repairing Date : {mobileData.repair_date}</p>
-                    <p>Time Slot : {mobileData.time_slot_id}</p>
+                    <p>Time Slot : {mobileData.time_slot}</p>
                 </IssueFixDetails>
                 <IssueWithPhone>
                     <h3>Issue With Phone :</h3>
-                    {/* {
-                        mobileData.issues.map((data,index)=>
-                            <p key={index} >{data}</p>
-                        )
-                    }    */}
+                    <p>{mobileData.issues}</p>
                 </IssueWithPhone>
                 <PersonalDetails>
                     <h3>Personal Details :</h3>

@@ -38,15 +38,18 @@ function Repair() {
         case 6: return(
             <AddNewAddressSection pageNum={pageNum} setPageNum={setPageNum} />
         )
-        case 7: return(
-            <EditReviewSection 
-            totalDetailsData={totalDetailsData} setTotalDetailsData={setTotalDetailsData}
-            addId={addId} setAddId={setAddId}
+        default : return(
+            <FirstPage totalDetailsData={totalDetailsData} setTotalDetailsData={setTotalDetailsData}
             pageNum={pageNum} setPageNum={setPageNum} />
         )
+        // case 7: return(
+        //     <EditReviewSection 
+        //     totalDetailsData={totalDetailsData} setTotalDetailsData={setTotalDetailsData}
+        //     addId={addId} setAddId={setAddId}
+        //     pageNum={pageNum} setPageNum={setPageNum} />
+        // )
         
       }
-    // },[pageNum])
 }
 
 export default Repair

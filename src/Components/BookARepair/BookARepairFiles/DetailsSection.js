@@ -25,6 +25,8 @@ export default function DetailsSection(props){
 
   useEffect(() => {
     sessionStorage.removeItem("TotalDetailsData");
+    sessionStorage.removeItem("AddressDetails");
+    sessionStorage.removeItem("BookingId");
     setCurrent(new window.Date().toISOString().slice(0, 10));
     axios
       .all([reqBrand, reqColour, reqIssues, reqTime])
@@ -46,6 +48,7 @@ export default function DetailsSection(props){
   const [colourName, setColourName] = useState("");
   const [modelName, setModelName] = useState("");
   const [timeSlot, setTimeSlot] = useState("");
+  const [timeString, setTimeString] = useState("");
   const [date, setDate] = useState("");
   const [multiIssue, setMultiIssue] = useState([]);
 
@@ -58,7 +61,8 @@ export default function DetailsSection(props){
       mobile_color : colourName,
       issues : multiIssue,
       repair_date : date,
-      time_slot_id : timeSlot
+      time_slot_id : timeSlot,
+      time_slot : timeString
     });
 
     !localStorage.getItem('token') ? navigate('/login') : props.setPageNum(2);
@@ -69,6 +73,7 @@ export default function DetailsSection(props){
     setModel(selectedBrand[0].models);
     setBrandName(e.target.value);
   }
+
   const handleModel = (e) => {
     setModelName(e.target.value);
   }
@@ -85,8 +90,11 @@ export default function DetailsSection(props){
   }
   const handleTime = (e) => {
     setTimeSlot(e.target.value);
+    setTimeString(e.target[e.target.selectedIndex].label);
   }
-  const handleIssueCheck = () =>{
+
+  const handleIssueCheck = (e) =>{
+    // e.stopPropagation();
     const finalCheckedArray = [];
     const checkedValue = document.querySelectorAll('.issueItem:checked');
     checkedValue.forEach((e)=>{
@@ -98,6 +106,7 @@ export default function DetailsSection(props){
   }
 
   const handleIssueClick = (e) =>{
+    e.stopPropagation();
     const checkbox = e.target.firstElementChild;
     if (checkbox.checked == true){
       checkbox.checked = false;
@@ -109,7 +118,19 @@ export default function DetailsSection(props){
     }
   }
 
-  const handleIssueDisplay = () =>{
+  const hideDiv = (e) => {
+    e.stopPropagation();
+    const issueList = document.querySelector(".issueList");
+    if(issueList.classList.contains("issueDisplay")){
+    }
+    else{
+      issueList.style.cssText = "display:none";
+      issueList.classList.toggle("issueDisplay");
+    }
+  }
+
+  const handleIssueDisplay = (e) =>{
+    e.stopPropagation();
     const issueList = document.querySelector(".issueList");
     if(issueList.classList.contains("issueDisplay")){
       issueList.style.cssText = "display:block";
@@ -121,7 +142,7 @@ export default function DetailsSection(props){
   }
 
   return(
-    <>
+    <div onClick={hideDiv}>
     {loading ? <h1>PAGE LOADING...</h1> : 
     <Details className="details" onSubmit={handleSubmit}>
       <Brand required="required">
@@ -184,11 +205,11 @@ export default function DetailsSection(props){
       <Time>
         <label>Best Time Slot</label>
         <select name="time" className="select" onChange={handleTime} required>
-          <option value="" selected >
+          <option value="" selected disabled>
             Choose an Time Slot
           </option>
           {time.map((data, index) => (
-            <option key={index} name={data.slot} value={data.id}>
+            <option key={index} label={data.slot} value={data.id}>
               {data.slot}
             </option>
           ))}
@@ -202,7 +223,7 @@ export default function DetailsSection(props){
       </Submit>
     </Details>
 }
-    </>
+    </div>
     );
 }
 const Details = styled.form`
