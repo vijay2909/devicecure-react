@@ -124,7 +124,12 @@ export default function AddressSection(props){
 
     return(
         <>
-        {loading ? <h1>PAGE LOADING...</h1> : 
+        {loading ? 
+        <LoadingDiv>
+            {/* <img src="loading1.gif" alt="PAGE LOADING..."></img> */}
+            <img src="loading2.gif" alt="PAGE LOADING..."></img>
+        </LoadingDiv> 
+        : 
         <Address>
             <NewAddress>
                 <Io5.IoAddCircle className="addCircle"/>
@@ -163,7 +168,13 @@ export default function AddressSection(props){
         </>
     )
 }
-
+const LoadingDiv = styled.div`
+text-align : center;
+padding : 20px;
+img{
+  width : 100px;
+}
+`
 const Address = styled.div`
 display : inline-block;
 width : 100%;

@@ -5,11 +5,13 @@ import Homepage from "./Components/Homepage/Homepage";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/SignUp/SignUp";
 import Repair from "./Components/BookARepair/Repair";
+import UserOrders from "./Components/UserOrders/UserOrders";
+import MobileRepairingOrders from "./Components/UserOrders/UserOrders Components/MobileRepairingOrders";
+import ScreenProtectionOrders from "./Components/UserOrders/UserOrders Components/ScreenProtectionOrders";
+import AccessoriesOrders from "./Components/UserOrders/UserOrders Components/AccessoriesOrders";
 
 function App() {
-  const[totalDetailsData, setTotalDetailsData] = useState({});
-  const[addId, setAddId] = useState();
-
+  
   return (
     <Router>
       <div className="app">
@@ -18,6 +20,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/Book-a-repair" element={<Repair />} />
+          <Route path="/screen-protection" element={<UserOrders />} >
+            <Route index element={<MobileRepairingOrders />}/>
+            <Route path="screen-protction" element={<ScreenProtectionOrders/>}/>
+            <Route path="accessories" element={<AccessoriesOrders/>}/>
+          </Route>
         </Routes>
       </div>
     </Router>

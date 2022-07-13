@@ -76,11 +76,12 @@ export default function AddNewAddressSection(props){
         })
         .then((res) => {
             console.log(res);
+            props.setPageNum(2);
         })
         .catch((err) => {
             console.log(err);
+            alert("Couldn't Add Your New Address");
         });
-        props.setPageNum(2);
     }
 
     return(

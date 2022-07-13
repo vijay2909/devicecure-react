@@ -7,7 +7,9 @@ import Header1 from "../../Homepage/Header1";
 import Header2 from "../../Homepage/Header2";
 import Footer from "../../Homepage/Footer";
 
-function UpdateAddressSection(props){
+export default function UpdateAddressSection(props){
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         console.log(props.addId);
@@ -29,6 +31,7 @@ function UpdateAddressSection(props){
             setPincode(res.data.data.pin_code);
             setAddType(res.data.data.address_type);
             setCity(res.data.data.city);
+            setLoading(false);
         })
         .catch((err) => {
             console.log(err);
@@ -95,17 +98,25 @@ function UpdateAddressSection(props){
         })
         .then((res)=>{
             console.log(res);
+            props.setPageNum(2);
         })
         .catch((err)=>{
             console.log(err);
+            alert("Couldn't Update Your Address");
         });
-        props.setPageNum(2);
     }
 
     return(
         <>
         <Header1 />
         <Header2 />
+        {
+            loading ?
+            <LoadingDiv>
+                {/* <img src="loading1.gif" alt="PAGE LOADING..."></img> */}
+                <img src="loading2.gif" alt="PAGE LOADING..."></img>
+            </LoadingDiv> 
+            :
         <UpdateAddress className="container">
             <Heading><h1>Updating Address</h1></Heading>
             <UpdatingForm onSubmit={handleSubmit}>
@@ -162,11 +173,18 @@ function UpdateAddressSection(props){
                 </Submit>
             </UpdatingForm>
         </UpdateAddress>  
+        }
         <Footer />  
         </>
     )
 }
- export default UpdateAddressSection
+const LoadingDiv = styled.div`
+text-align : center;
+padding : 20px;
+img{
+  width : 100px;
+}
+`
 const UpdateAddress = styled.div``
 const Heading = styled.div`
 text-align : center;

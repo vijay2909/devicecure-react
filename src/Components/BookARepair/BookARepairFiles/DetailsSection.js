@@ -143,7 +143,12 @@ export default function DetailsSection(props){
 
   return(
     <div onClick={hideDiv}>
-    {loading ? <h1>PAGE LOADING...</h1> : 
+    {loading ? 
+    <LoadingDiv>
+      {/* <img src="loading1.gif" alt="PAGE LOADING..."></img> */}
+      <img src="loading2.gif" alt="PAGE LOADING..."></img>
+    </LoadingDiv> 
+    :
     <Details className="details" onSubmit={handleSubmit}>
       <Brand required="required">
         <label>Brand</label>
@@ -226,6 +231,14 @@ export default function DetailsSection(props){
     </div>
     );
 }
+
+const LoadingDiv = styled.div`
+text-align : center;
+padding : 20px;
+img{
+  width : 100px;
+}
+`
 const Details = styled.form`
   width: 100%;
   display: flex;
