@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 export default function ScreenProtectionOrders() {
   return (
-    <div><h1>Screen Protection</h1></div>
+    <div style={{width : "80%", margin : "0 auto"}}><h2>Screen Protection</h2></div>
   )
 }
 

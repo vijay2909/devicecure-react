@@ -4,6 +4,6 @@ import styled from "styled-components";
 
 export default function AccessoriesOrders() {
   return (
-    <div><h1>Accessories</h1></div>
+    <div style={{width : "80%", margin : "0 auto"}}><h2>Accessories</h2></div>
   )
 }

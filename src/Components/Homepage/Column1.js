@@ -26,7 +26,7 @@ function Column1() {
           <FacebookIcon fontSize="large" />
         </span>
       </div>
-      <img src="./Images/googleplayLogo.png" />
+      <a href="https://play.google.com/store/apps/details?id=com.app.devicecure" target="_blank"><img src="./Images/googleplayLogo.png" /></a>
     </div>
   );
 }

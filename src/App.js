@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./Components/Homepage/Homepage";
@@ -10,16 +10,29 @@ import MobileRepairingOrders from "./Components/UserOrders/UserOrders Components
 import ScreenProtectionOrders from "./Components/UserOrders/UserOrders Components/ScreenProtectionOrders";
 import AccessoriesOrders from "./Components/UserOrders/UserOrders Components/AccessoriesOrders";
 
-function App() {
+function App(props) {
   
+const [brandName, setBrandName] = useState("");
+const [modelName, setModelName] = useState("");
+const [multiIssue, setMultiIssue] = useState([]);
+
   return (
     <Router>
       <div className="app">
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/" element={<Homepage 
+          brandName={brandName} setBrandName={setBrandName}
+          modelName={modelName} setModelName={setModelName}
+          multiIssue={multiIssue} setMultiIssue={setMultiIssue}/>} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/Book-a-repair" element={<Repair />} />
+
+          <Route path="/Book-a-repair" element={<Repair 
+          brandName={brandName} setBrandName={setBrandName}
+          modelName={modelName} setModelName={setModelName}
+          multiIssue={multiIssue} setMultiIssue={setMultiIssue}/>} />
+
           <Route path="/screen-protection" element={<UserOrders />} >
             <Route index element={<MobileRepairingOrders />}/>
             <Route path="screen-protction" element={<ScreenProtectionOrders/>}/>

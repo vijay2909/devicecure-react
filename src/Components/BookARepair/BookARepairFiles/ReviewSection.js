@@ -9,6 +9,7 @@ export default function ReviewSection(props){
 
     const [mobileData, setMobileData] = useState({});
     const [addData, setAddData] = useState({});
+    const [issueArray, setIssueArray] = useState([]);
 
     useEffect(()=>{
         setMobileData(JSON.parse(sessionStorage.getItem("TotalDetailsData")));
@@ -64,7 +65,9 @@ export default function ReviewSection(props){
                 </IssueFixDetails>
                 <IssueWithPhone>
                     <h3>Issue With Phone :</h3>
-                    <p>{mobileData.issues}</p>
+                    <p>
+                        {mobileData.issues?.map((data, idx)=><span>{data}<br/></span>)}
+                    </p>
                 </IssueWithPhone>
                 <PersonalDetails>
                     <h3>Personal Details :</h3>

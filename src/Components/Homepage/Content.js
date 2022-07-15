@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import ContentPart1 from "./ContentPart1";
 import ContentPart2 from "./ContentPart2";
 import ContentPart3 from "./ContentPart3";
@@ -13,76 +13,62 @@ import "./Horizontalrule.css";
 
 
 
-function Content() {
+function Content(props) {
   return (
     <div className="content">
+
       <hr className="horizontalrule" />
-      {/* Content Part 1-------START */}
+
       <div>
-        <ContentPart1 />
+        <ContentPart1 brandName={props.brandName} setBrandName={props.setBrandName}
+          modelName={props.modelName} setModelName={props.setModelName}
+          multiIssue={props.multiIssue} setMultiIssue={props.setMultiIssue}/>
       </div>
-      {/* ------------------------- */}
 
       <hr className="horizontalrule" />
 
-      {/* Content Part 2-------START */}
       <div>
         <ContentPart2 />
       </div>
-      {/* ---------------------------*/}
 
       <hr className="horizontalrule" />
 
-      {/* Content Part 3-------START */}
       <div>
         <ContentPart3 />
       </div>
-      {/* ---------------------------*/}
 
       <hr className="horizontalrule" />
-
-      {/* Content Part 4-------START */}
 
       <div>
         <ContentPart4 /> 
       </div>
-      {/* ---------------------------*/}
 
       <hr className="horizontalrule" />
 
-      {/* Content Part 5-------START */}
       <div>
       <ContentPart5 />
       </div>
-      {/* ---------------------------*/}
 
       <hr className="horizontalrule" />
 
-      {/* Content Part 6-------START */}
       <ContentPart6 />
-      {/* ---------------------------*/}
 
       <hr className="horizontalrule" />
 
-      {/* Content Part 7-------START */}
       <ContentPart7 />
-      {/* ---------------------------*/}
 
       <hr className="horizontalrule" />
 
-      {/* Content Part 8-------START */}
       <div>
         <ContentPart8 />
       </div>
-      {/* ---------------------------*/}
 
       <hr className="horizontalrule" />
 
-      {/* Content Part 9-------START */}
       <div>
         <ContentPart9 />
       </div>
-      {/* ---------------------------*/}
+
     </div>
   );
 }

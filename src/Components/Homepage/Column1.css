@@ -10,6 +10,11 @@
   width: 250px;
   margin: 25px;
 }
+.column1 > a img {
+  object-fit: contain;
+  width: 250px;
+  margin: 25px;
+}
 .column1__address {
   display: flex;
   flex-direction: column;

@@ -29,7 +29,7 @@ export default function MobileRepairingOrders() {
     <>
     <Main>
         <Heading>
-            <h1>Mobile Repairing</h1>
+            <h2>Mobile Repairing</h2>
         </Heading>
         {
             data.map((data,idx)=>{
@@ -39,7 +39,9 @@ export default function MobileRepairingOrders() {
                             <p><strong>Booking Id : </strong>{data.booking_id}</p>
                             <p><strong>Status : </strong>{data.status}</p>
                             <p>{data.created_at}</p>
-                            <p className='downloadPara'><a href="#"><strong>DOWNLOAD INVOICE</strong></a></p>
+                            {
+                            data.status == "PENDING" ? <></> :  <p className='downloadPara'><a href={`https://staging.devicecure.in/order/${data.id}/generate-invoice`} target="_blank"><strong>DOWNLOAD INVOICE</strong></a></p>
+                            }
                         </FirstSection>
                         <SecondSection>
                             <p><strong>Technician : </strong>{data.technician}</p>
@@ -52,9 +54,11 @@ export default function MobileRepairingOrders() {
                             <p><strong>Mobile Colour : </strong>{data.mobile_color}</p>
                             <p className='invoicePara'><strong>Issue With Phone : </strong>
                             {
-                            data.issue_with_mobile.map((data,idx)=>
-                                <span>{data} &nbsp;</span>)
-                            }</p>
+                                data.issue_with_mobile.map((data,idx)=>
+                                    idx == 0 ? <span>{data}</span> : <span>,&nbsp;{data}</span>
+                                )
+                            }
+                            </p>
                         </SecondSection>
                     </Box>
                 )
@@ -66,11 +70,14 @@ export default function MobileRepairingOrders() {
   )
 }
 const Main = styled.div`
+width : 80%;
+margin : 0 auto;
+`
+const Heading = styled.div`
 width : 100%;
 `
-const Heading = styled.div``
 const Box = styled.div`
-width : 80%;
+width : 100%;
 margin : 20px auto;
 border-radius : 20px;
 box-shadow : 0 0 5px black;

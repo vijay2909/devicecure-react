@@ -6,11 +6,11 @@ function Column4() {
     <div className='column4'>
         <div className='column4__title'><h2>Important Links</h2></div>
         <div className='column4__content'>
-            <span>Privacy Policy</span>
-            <span>Warrenty Policy</span>
-            <span>Terms & Conditions</span>
-            <span>Warrenty Claim</span>
-            <span>Refer & Earn</span>
+            <span><a href='https://staging.devicecure.in/privacy-policy' target="_blank">Privacy Policy</a></span>
+            <span><a href='https://staging.devicecure.in/warranty-policy' target="_blank">Warranty Policy</a></span>
+            <span><a href='https://staging.devicecure.in/terms-conditions' target="_blank">Terms & Conditions</a></span>
+            <span><a href='https://staging.devicecure.in/' target="_blank">Warranty Claim</a></span>
+            <span><a href='https://staging.devicecure.in/' target="_blank">Refer & Earn</a></span>
         </div>
         
     </div>

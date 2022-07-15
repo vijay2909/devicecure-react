@@ -40,7 +40,7 @@ export default function DetailsSection(props){
         })
       )
       .catch((err) => {
-        // console.log(err);
+        console.log("this is error", err);
       });
   }, []);
 
@@ -153,8 +153,8 @@ export default function DetailsSection(props){
       <Brand required="required">
         <label>Brand</label>
         <select onChange={handleBrand} name="brand" required >
-          <option value="" selected disabled>
-            Choose a brand
+        <option value="" selected disabled>
+            Choose the model
           </option>
           {brand.map((data, index) => (
             <option key={index} value={data.brand_name} >
@@ -165,7 +165,7 @@ export default function DetailsSection(props){
       </Brand>
       <Model>
         <label>Model</label>
-        <select name="model" onChange={handleModel} required >
+        <select name="model" value={props.modelName} onChange={handleModel} required >
           <option value="" selected disabled>
             Choose the model
           </option>
@@ -191,7 +191,7 @@ export default function DetailsSection(props){
       </Colour>
       <Issue>
         <label className="issueLabelMain" >Issue with phone</label>
-        <input className="issueInputMain" type="text" required placeholder="Choose an Issue" onClick={handleIssueDisplay}/>
+        <input className="issueInputMain" value={props.multiIssue} type="text" required onClick={handleIssueDisplay}/>
         <IssueList className="issueList issueDisplay">
           {
             issue.map((data, index) => (

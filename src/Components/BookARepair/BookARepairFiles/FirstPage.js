@@ -17,6 +17,9 @@ export default function FirstPage(props){
             <DetailsSection 
             totalDetailsData={props.totalDetailsData} setTotalDetailsData={props.setTotalDetailsData} 
             pageNum={props.pageNum} setPageNum={props.setPageNum}
+            brandName={props.brandName} setBrandName={props.setBrandName}
+            modelName={props.modelName} setModelName={props.setModelName}
+            multiIssue={props.multiIssue} setMultiIssue={props.setMultiIssue}
             />
         </div>
         <Footer />
