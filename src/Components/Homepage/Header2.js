@@ -22,6 +22,10 @@ function Header2() {
         <span className="links">Buy Accessories</span>
       </Link>
 
+      <Link className="anchor" to="/your-orders">
+        <span className="links">Your Orders</span>
+      </Link>
+
       <Link className="anchor" to="/about-us">
         <span className="links">About Us</span>
       </Link>

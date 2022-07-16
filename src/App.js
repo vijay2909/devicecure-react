@@ -9,6 +9,7 @@ import UserOrders from "./Components/UserOrders/UserOrders";
 import MobileRepairingOrders from "./Components/UserOrders/UserOrders Components/MobileRepairingOrders";
 import ScreenProtectionOrders from "./Components/UserOrders/UserOrders Components/ScreenProtectionOrders";
 import AccessoriesOrders from "./Components/UserOrders/UserOrders Components/AccessoriesOrders";
+import ScreenProtectionMain from "./Components/ScreenProtection/ScreenProtectionMain";
 
 function App(props) {
   
@@ -27,13 +28,14 @@ const [multiIssue, setMultiIssue] = useState([]);
 
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="screen-protection" element={<ScreenProtectionMain />}/>
 
           <Route path="/Book-a-repair" element={<Repair 
           brandName={brandName} setBrandName={setBrandName}
           modelName={modelName} setModelName={setModelName}
           multiIssue={multiIssue} setMultiIssue={setMultiIssue}/>} />
 
-          <Route path="/screen-protection" element={<UserOrders />} >
+          <Route path="/your-orders" element={<UserOrders />} >
             <Route index element={<MobileRepairingOrders />}/>
             <Route path="screen-protction" element={<ScreenProtectionOrders/>}/>
             <Route path="accessories" element={<AccessoriesOrders/>}/>
